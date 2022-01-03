@@ -27,6 +27,8 @@ implementation group: 'com.trivago', name: 'fastutil-concurrent-wrapper', versio
 
 ## Usage
 
+### Basic usage
+
 ```java
 ConcurrentLongLongMapBuilder b = ConcurrentLongLongMapBuilder.newBuilder()
         .withBuckets(2)
@@ -41,6 +43,9 @@ map.put(1L,10L);
 long v = map.get(1L);
 
 ```
+
+Examples of creation and usage could be found inside 
+[test directory](https://github.com/trivago/fastutil-concurrent-wrapper/tree/master/src/test/java/com/trivago/fastutilconcurrentwrapper);
 
 ### MapMode
 

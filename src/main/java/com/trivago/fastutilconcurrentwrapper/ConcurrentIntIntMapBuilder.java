@@ -1,5 +1,8 @@
 package com.trivago.fastutilconcurrentwrapper;
 
+import com.trivago.fastutilconcurrentwrapper.map.ConcurrentBusyWaitingIntIntMap;
+import com.trivago.fastutilconcurrentwrapper.map.ConcurrentIntIntMap;
+
 public final class ConcurrentIntIntMapBuilder {
 
     private MapMode mapMode = MapMode.BLOCKING;
@@ -49,6 +52,16 @@ public final class ConcurrentIntIntMapBuilder {
             @Override
             IntIntMap createMap(ConcurrentIntIntMapBuilder builder) {
                 return new ConcurrentIntIntMap(
+                        builder.buckets,
+                        builder.initialCapacity,
+                        builder.loadFactor,
+                        builder.defaultValue);
+            }
+        },
+        BUSY_WAITING {
+            @Override
+            IntIntMap createMap(ConcurrentIntIntMapBuilder builder) {
+                return new ConcurrentBusyWaitingIntIntMap(
                         builder.buckets,
                         builder.initialCapacity,
                         builder.loadFactor,

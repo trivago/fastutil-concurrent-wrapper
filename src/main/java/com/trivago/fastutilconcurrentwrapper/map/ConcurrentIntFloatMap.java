@@ -1,21 +1,21 @@
-package com.trivago.fastutilconcurrentwrapper;
+package com.trivago.fastutilconcurrentwrapper.map;
 
-import com.trivago.fastutilconcurrentwrapper.wrapper.PrimitiveFastutilLongLongWrapper;
+import com.trivago.fastutilconcurrentwrapper.IntFloatMap;
+import com.trivago.fastutilconcurrentwrapper.wrapper.PrimitiveFastutilIntFloatWrapper;
 
 import java.util.concurrent.locks.Lock;
 
-public class ConcurrentLongLongMap extends PrimitiveConcurrentMap implements LongLongMap {
+public class ConcurrentIntFloatMap extends PrimitiveConcurrentMap implements IntFloatMap {
 
-    private final LongLongMap[] maps;
+    private final IntFloatMap[] maps;
 
-    ConcurrentLongLongMap(int numBuckets,
-                          int initialCapacity,
-                          float loadFactor,
-                          long defaultValue) {
+    public ConcurrentIntFloatMap(int numBuckets,
+                                 int initialCapacity,
+                                 float loadFactor) {
         super(numBuckets);
-        this.maps = new LongLongMap[numBuckets];
+        this.maps = new IntFloatMap[numBuckets];
         for (int i = 0; i < numBuckets; i++) {
-            maps[i] = new PrimitiveFastutilLongLongWrapper(initialCapacity, loadFactor, defaultValue);
+            maps[i] = new PrimitiveFastutilIntFloatWrapper(initialCapacity, loadFactor, IntFloatMap.DEFAULT_VALUE);
         }
     }
 
@@ -30,7 +30,7 @@ public class ConcurrentLongLongMap extends PrimitiveConcurrentMap implements Lon
     }
 
     @Override
-    public boolean containsKey(long key) {
+    public boolean containsKey(int key) {
         int bucket = getBucket(key);
 
         Lock readLock = locks[bucket].readLock();
@@ -43,10 +43,10 @@ public class ConcurrentLongLongMap extends PrimitiveConcurrentMap implements Lon
     }
 
     @Override
-    public long get(long l) {
+    public float get(int l) {
         int bucket = getBucket(l);
 
-        long result;
+        float result;
 
         Lock readLock = locks[bucket].readLock();
         readLock.lock();
@@ -60,10 +60,10 @@ public class ConcurrentLongLongMap extends PrimitiveConcurrentMap implements Lon
     }
 
     @Override
-    public long put(long key, long value) {
+    public float put(int key, float value) {
         int bucket = getBucket(key);
 
-        long result;
+        float result;
 
         Lock writeLock = locks[bucket].writeLock();
         writeLock.lock();
@@ -77,7 +77,7 @@ public class ConcurrentLongLongMap extends PrimitiveConcurrentMap implements Lon
     }
 
     @Override
-    public long remove(long key) {
+    public float remove(int key) {
         int bucket = getBucket(key);
 
         Lock writeLock = locks[bucket].writeLock();
@@ -88,4 +88,5 @@ public class ConcurrentLongLongMap extends PrimitiveConcurrentMap implements Lon
             writeLock.unlock();
         }
     }
+
 }

@@ -1,4 +1,6 @@
-package com.trivago.fastutilconcurrentwrapper;
+package com.trivago.fastutilconcurrentwrapper.map;
+
+import com.trivago.fastutilconcurrentwrapper.PrimitiveKeyMap;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;

@@ -1,5 +1,6 @@
-package com.trivago.fastutilconcurrentwrapper;
+package com.trivago.fastutilconcurrentwrapper.map;
 
+import com.trivago.fastutilconcurrentwrapper.IntFloatMap;
 import com.trivago.fastutilconcurrentwrapper.wrapper.PrimitiveFastutilIntFloatWrapper;
 
 import java.util.concurrent.locks.Lock;

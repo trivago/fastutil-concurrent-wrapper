@@ -1,5 +1,8 @@
 package com.trivago.fastutilconcurrentwrapper;
 
+import com.trivago.fastutilconcurrentwrapper.map.ConcurrentBusyWaitingIntFloatMap;
+import com.trivago.fastutilconcurrentwrapper.map.ConcurrentIntFloatMap;
+
 public final class ConcurrentIntFloatMapBuilder {
 
     private MapMode mapMode = MapMode.BUSY_WAITING;
@@ -20,7 +23,7 @@ public final class ConcurrentIntFloatMapBuilder {
         return this;
     }
 
-    public ConcurrentIntFloatMapBuilder withDefaultValue(int defaultValue) {
+    public ConcurrentIntFloatMapBuilder withDefaultValue(float defaultValue) {
         this.defaultValue = defaultValue;
         return this;
     }
@@ -49,6 +52,15 @@ public final class ConcurrentIntFloatMapBuilder {
             @Override
             IntFloatMap createMap(ConcurrentIntFloatMapBuilder builder) {
                 return new ConcurrentBusyWaitingIntFloatMap(
+                        builder.buckets,
+                        builder.initialCapacity,
+                        builder.loadFactor);
+            }
+        },
+        BLOCKING {
+            @Override
+            IntFloatMap createMap(ConcurrentIntFloatMapBuilder builder) {
+                return new ConcurrentIntFloatMap(
                         builder.buckets,
                         builder.initialCapacity,
                         builder.loadFactor);

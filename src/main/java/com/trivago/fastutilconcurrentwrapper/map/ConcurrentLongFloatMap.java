@@ -1,26 +1,32 @@
-package com.trivago.fastutilconcurrentwrapper;
+package com.trivago.fastutilconcurrentwrapper.map;
 
-import com.trivago.fastutilconcurrentwrapper.wrapper.PrimitiveFastutilIntIntWrapper;
+import com.trivago.fastutilconcurrentwrapper.LongFloatMap;
+import com.trivago.fastutilconcurrentwrapper.wrapper.PrimitiveFastutilLongFloatWrapper;
 
 import java.util.concurrent.locks.Lock;
 
-public class ConcurrentIntIntMap extends PrimitiveConcurrentMap implements IntIntMap {
+public class ConcurrentLongFloatMap extends PrimitiveConcurrentMap implements LongFloatMap {
 
-    private final IntIntMap[] maps;
+    private final LongFloatMap[] maps;
+    private final float defaultValue;
 
-    ConcurrentIntIntMap(
-            int numBuckets,
-            int initialCapacity,
-            float loadFactor,
-            int defaultValue) {
-
+    ConcurrentLongFloatMap(int numBuckets,
+                           int initialCapacity,
+                           float loadFactor,
+                           float defaultValue) {
         super(numBuckets);
 
-        this.maps = new IntIntMap[numBuckets];
+        this.maps = new LongFloatMap[numBuckets];
+        this.defaultValue = defaultValue;
 
         for (int i = 0; i < numBuckets; i++) {
-            maps[i] = new PrimitiveFastutilIntIntWrapper(initialCapacity, loadFactor, defaultValue);
+            maps[i] = new PrimitiveFastutilLongFloatWrapper(initialCapacity, loadFactor, defaultValue);
         }
+    }
+
+    @Override
+    public float getDefaultValue() {
+        return defaultValue;
     }
 
     @Override
@@ -34,7 +40,7 @@ public class ConcurrentIntIntMap extends PrimitiveConcurrentMap implements IntIn
     }
 
     @Override
-    public boolean containsKey(int key) {
+    public boolean containsKey(long key) {
         int bucket = getBucket(key);
 
         Lock readLock = locks[bucket].readLock();
@@ -47,10 +53,10 @@ public class ConcurrentIntIntMap extends PrimitiveConcurrentMap implements IntIn
     }
 
     @Override
-    public int get(int l) {
+    public float get(long l) {
         int bucket = getBucket(l);
 
-        int result;
+        float result;
 
         Lock readLock = locks[bucket].readLock();
         readLock.lock();
@@ -64,10 +70,10 @@ public class ConcurrentIntIntMap extends PrimitiveConcurrentMap implements IntIn
     }
 
     @Override
-    public int put(int key, int value) {
+    public float put(long key, float value) {
         int bucket = getBucket(key);
 
-        int result;
+        float result;
 
         Lock writeLock = locks[bucket].writeLock();
         writeLock.lock();
@@ -81,7 +87,7 @@ public class ConcurrentIntIntMap extends PrimitiveConcurrentMap implements IntIn
     }
 
     @Override
-    public int remove(int key) {
+    public float remove(long key) {
         int bucket = getBucket(key);
 
         Lock writeLock = locks[bucket].writeLock();
@@ -92,4 +98,5 @@ public class ConcurrentIntIntMap extends PrimitiveConcurrentMap implements IntIn
             writeLock.unlock();
         }
     }
+
 }

@@ -1,21 +1,22 @@
-package com.trivago.fastutilconcurrentwrapper;
+package com.trivago.fastutilconcurrentwrapper.map;
 
-import com.trivago.fastutilconcurrentwrapper.wrapper.PrimitiveFastutilLongLongWrapper;
+import com.trivago.fastutilconcurrentwrapper.IntIntMap;
+import com.trivago.fastutilconcurrentwrapper.wrapper.PrimitiveFastutilIntIntWrapper;
 
 import java.util.concurrent.locks.Lock;
 
-public class ConcurrentBusyWaitingLongLongMap extends PrimitiveConcurrentMap implements LongLongMap {
+public class ConcurrentBusyWaitingIntIntMap extends PrimitiveConcurrentMap implements IntIntMap {
 
-    private final LongLongMap[] maps;
+    private final IntIntMap[] maps;
 
-    ConcurrentBusyWaitingLongLongMap(int numBuckets,
-                                     int initialCapacity,
-                                     float loadFactor,
-                                     long defaultValue) {
+    ConcurrentBusyWaitingIntIntMap(int numBuckets,
+                                   int initialCapacity,
+                                   float loadFactor,
+                                   int defaultValue) {
         super(numBuckets);
-        this.maps = new LongLongMap[numBuckets];
+        this.maps = new IntIntMap[numBuckets];
         for (int i = 0; i < numBuckets; i++) {
-            maps[i] = new PrimitiveFastutilLongLongWrapper(initialCapacity, loadFactor, defaultValue);
+            maps[i] = new PrimitiveFastutilIntIntWrapper(initialCapacity, loadFactor, defaultValue);
         }
     }
 
@@ -30,7 +31,7 @@ public class ConcurrentBusyWaitingLongLongMap extends PrimitiveConcurrentMap imp
     }
 
     @Override
-    public boolean containsKey(long key) {
+    public boolean containsKey(int key) {
         int bucket = getBucket(key);
 
         Lock readLock = locks[bucket].readLock();
@@ -47,7 +48,7 @@ public class ConcurrentBusyWaitingLongLongMap extends PrimitiveConcurrentMap imp
     }
 
     @Override
-    public long get(long key) {
+    public int get(int key) {
         int bucket = getBucket(key);
 
         Lock readLock = locks[bucket].readLock();
@@ -64,7 +65,7 @@ public class ConcurrentBusyWaitingLongLongMap extends PrimitiveConcurrentMap imp
     }
 
     @Override
-    public long put(long key, long value) {
+    public int put(int key, int value) {
         int bucket = getBucket(key);
 
         Lock writeLock = locks[bucket].writeLock();
@@ -81,7 +82,7 @@ public class ConcurrentBusyWaitingLongLongMap extends PrimitiveConcurrentMap imp
     }
 
     @Override
-    public long remove(long key) {
+    public int remove(int key) {
         int bucket = getBucket(key);
 
         Lock writeLock = locks[bucket].writeLock();

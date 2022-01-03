@@ -1,8 +1,11 @@
 package com.trivago.fastutilconcurrentwrapper;
 
+import com.trivago.fastutilconcurrentwrapper.map.ConcurrentBusyWaitingLongFloatMap;
+import com.trivago.fastutilconcurrentwrapper.map.ConcurrentLongFloatMap;
+
 import static com.trivago.fastutilconcurrentwrapper.LongFloatMap.DEFAULT_VALUE;
 
-public class ConcurrentLongFloatMapBuilder {
+public final class ConcurrentLongFloatMapBuilder {
 
     private MapMode mapMode = MapMode.BLOCKING;
     private int buckets = 12;
@@ -51,6 +54,16 @@ public class ConcurrentLongFloatMapBuilder {
             @Override
             LongFloatMap createMap(ConcurrentLongFloatMapBuilder builder) {
                 return new ConcurrentLongFloatMap(
+                        builder.buckets,
+                        builder.initialCapacity,
+                        builder.loadFactor,
+                        builder.defaultValue);
+            }
+        },
+        BUSY_WAITING {
+            @Override
+            LongFloatMap createMap(ConcurrentLongFloatMapBuilder builder) {
+                return new ConcurrentBusyWaitingLongFloatMap(
                         builder.buckets,
                         builder.initialCapacity,
                         builder.loadFactor,

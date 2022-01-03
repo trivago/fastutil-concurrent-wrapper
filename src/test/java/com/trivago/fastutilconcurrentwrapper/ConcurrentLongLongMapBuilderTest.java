@@ -21,4 +21,20 @@ public class ConcurrentLongLongMapBuilderTest {
         long v = map.get(1L);
         assertEquals(10L, v);
     }
+
+    @Test
+    public void simpleBuilderTest0() {
+        ConcurrentLongLongMapBuilder b = ConcurrentLongLongMapBuilder.newBuilder()
+                .withBuckets(2)
+                .withDefaultValue(0)
+                .withInitialCapacity(100)
+                .withMode(ConcurrentLongLongMapBuilder.MapMode.BLOCKING)
+                .withLoadFactor(0.9f);
+
+        LongLongMap map = b.build();
+
+        map.put(1L, 10L);
+        long v = map.get(1L);
+        assertEquals(10L, v);
+    }
 }
