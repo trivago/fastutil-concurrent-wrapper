@@ -54,7 +54,8 @@ public final class ConcurrentIntFloatMapBuilder {
                 return new ConcurrentBusyWaitingIntFloatMap(
                         builder.buckets,
                         builder.initialCapacity,
-                        builder.loadFactor);
+                        builder.loadFactor,
+                        builder.defaultValue);
             }
         },
         BLOCKING {
@@ -63,7 +64,8 @@ public final class ConcurrentIntFloatMapBuilder {
                 return new ConcurrentIntFloatMap(
                         builder.buckets,
                         builder.initialCapacity,
-                        builder.loadFactor);
+                        builder.loadFactor,
+                        builder.defaultValue);
             }
         };
 

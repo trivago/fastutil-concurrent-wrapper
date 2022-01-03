@@ -37,4 +37,19 @@ public class ConcurrentLongLongMapBuilderTest {
         long v = map.get(1L);
         assertEquals(10L, v);
     }
+
+    @Test
+    public void defaultValueTest() {
+        ConcurrentLongLongMapBuilder b = ConcurrentLongLongMapBuilder.newBuilder()
+                .withBuckets(2)
+                .withDefaultValue(10L)
+                .withInitialCapacity(100)
+                .withMode(ConcurrentLongLongMapBuilder.MapMode.BLOCKING)
+                .withLoadFactor(0.9f);
+
+        LongLongMap map = b.build();
+
+        long v = map.get(1L);
+        assertEquals(10L, v);
+    }
 }

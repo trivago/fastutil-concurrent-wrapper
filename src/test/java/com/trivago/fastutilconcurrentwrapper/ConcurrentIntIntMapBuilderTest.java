@@ -36,4 +36,19 @@ public class ConcurrentIntIntMapBuilderTest {
         float v = map.get(1);
         assertEquals(10, v);
     }
+
+    @Test
+    public void defValueTest() {
+        ConcurrentIntIntMapBuilder b = ConcurrentIntIntMapBuilder.newBuilder()
+                .withBuckets(2)
+                .withDefaultValue(20)
+                .withInitialCapacity(100)
+                .withMode(ConcurrentIntIntMapBuilder.MapMode.BLOCKING)
+                .withLoadFactor(0.8f);
+
+        IntIntMap map = b.build();
+
+        float v = map.get(1);
+        assertEquals(20, v);
+    }
 }
