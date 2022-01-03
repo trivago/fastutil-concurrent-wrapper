@@ -1,0 +1,53 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.18.0'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'java'
+apply plugin: "com.vanniktech.maven.publish"
+
+group 'com.trivago'
+version '0.0.1-SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    implementation group: 'it.unimi.dsi', name: 'fastutil', version: '8.5.6'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    archiveBaseName.set('fastutil-concurrent-wrapper')
+}
+
+tasks.register("release") {
+
+    // ./gradlew release uploadArchives
+    mavenPublish {
+        targets {
+            uploadArchives {
+                releaseRepositoryUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+                snapshotRepositoryUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+                repositoryUsername = nexusUsername
+                repositoryPassword = nexusPassword
+                signing = true
+            }
+        }
+    }
+}
