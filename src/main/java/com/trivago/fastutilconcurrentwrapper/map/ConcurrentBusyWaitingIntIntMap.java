@@ -9,10 +9,10 @@ public class ConcurrentBusyWaitingIntIntMap extends PrimitiveConcurrentMap imple
 
     private final IntIntMap[] maps;
 
-    ConcurrentBusyWaitingIntIntMap(int numBuckets,
-                                   int initialCapacity,
-                                   float loadFactor,
-                                   int defaultValue) {
+    public ConcurrentBusyWaitingIntIntMap(int numBuckets,
+                                          int initialCapacity,
+                                          float loadFactor,
+                                          int defaultValue) {
         super(numBuckets);
         this.maps = new IntIntMap[numBuckets];
         for (int i = 0; i < numBuckets; i++) {

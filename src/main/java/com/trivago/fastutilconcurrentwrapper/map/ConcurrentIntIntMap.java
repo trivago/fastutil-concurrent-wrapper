@@ -9,7 +9,7 @@ public class ConcurrentIntIntMap extends PrimitiveConcurrentMap implements IntIn
 
     private final IntIntMap[] maps;
 
-    ConcurrentIntIntMap(
+    public ConcurrentIntIntMap(
             int numBuckets,
             int initialCapacity,
             float loadFactor,

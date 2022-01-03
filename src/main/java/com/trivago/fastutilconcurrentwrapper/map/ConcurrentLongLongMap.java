@@ -9,10 +9,10 @@ public class ConcurrentLongLongMap extends PrimitiveConcurrentMap implements Lon
 
     private final LongLongMap[] maps;
 
-    ConcurrentLongLongMap(int numBuckets,
-                          int initialCapacity,
-                          float loadFactor,
-                          long defaultValue) {
+    public ConcurrentLongLongMap(int numBuckets,
+                                 int initialCapacity,
+                                 float loadFactor,
+                                 long defaultValue) {
         super(numBuckets);
         this.maps = new LongLongMap[numBuckets];
         for (int i = 0; i < numBuckets; i++) {

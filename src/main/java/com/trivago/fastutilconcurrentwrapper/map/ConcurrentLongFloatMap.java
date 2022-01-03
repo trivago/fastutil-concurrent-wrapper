@@ -10,7 +10,7 @@ public class ConcurrentLongFloatMap extends PrimitiveConcurrentMap implements Lo
     private final LongFloatMap[] maps;
     private final float defaultValue;
 
-    ConcurrentLongFloatMap(int numBuckets,
+    public ConcurrentLongFloatMap(int numBuckets,
                            int initialCapacity,
                            float loadFactor,
                            float defaultValue) {

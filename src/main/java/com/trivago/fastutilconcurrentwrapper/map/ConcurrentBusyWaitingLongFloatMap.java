@@ -10,10 +10,10 @@ public class ConcurrentBusyWaitingLongFloatMap extends PrimitiveConcurrentMap im
     private final LongFloatMap[] maps;
     private final float defaultValue;
 
-    ConcurrentBusyWaitingLongFloatMap(int numBuckets,
-                                      int initialCapacity,
-                                      float loadFactor,
-                                      float defaultValue) {
+    public ConcurrentBusyWaitingLongFloatMap(int numBuckets,
+                                             int initialCapacity,
+                                             float loadFactor,
+                                             float defaultValue) {
         super(numBuckets);
         this.defaultValue = defaultValue;
         this.maps = new LongFloatMap[numBuckets];
