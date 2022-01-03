@@ -2,7 +2,17 @@
 
 ## Description
 
-Set of concurrent wrapper around [fastutil primitive maps](https://github.com/vigna/fastutil).
+Set of concurrent wrappers around [fastutil primitive maps](https://github.com/vigna/fastutil).
+
+Main purpose is to provide useful concurrent builders around 
+fastutil primitive maps with flexible locking policy.
+
+Advantages:
+- every map uses striped ReadWriteLocks, 
+- two lock modes: standard and busy-waiting (could be good for low-latency systems),
+- no extra memory on stack -- API based on primitive types.
+
+Check [usage](#usage) section for more detains.
 
 _Note_: currently the lib contains wrappers not for every primitive map. Feel free to contribute.
 
@@ -26,6 +36,13 @@ implementation group: 'com.trivago', name: 'fastutil-concurrent-wrapper', versio
 ```
 
 ## Usage
+
+### Builder options
+- number of buckets -- number of buckets in the map,
+- default value -- default value, for _getOrDefault()_ method
+- initial capacity -- initial map capacity,
+- concurrent mode -- lock mode: default and busy-waiting,
+- load factor -- map load factor.
 
 ### Basic usage
 
