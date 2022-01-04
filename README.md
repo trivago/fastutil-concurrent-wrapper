@@ -1,6 +1,7 @@
 # FastUtil Concurrent Wrapper
 
 ![Java CI](https://github.com/trivago/fastutil-concurrent-wrapper/actions/workflows/gradle.yml/badge.svg)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.trivago/fastutil-concurrent-wrapper/badge.svg?style=plastic)](https://maven-badges.herokuapp.com/maven-central/com.trivago/fastutil-concurrent-wrapper/)
 
 ## Description
 
@@ -29,14 +30,14 @@ _Note_: currently the lib contains wrappers not for every primitive map. Feel fr
 <dependency>
     <groupId>com.trivago</groupId>
     <artifactId>fastutil-concurrent-wrapper</artifactId>
-    <version>0.0.x</version>
+    <version>0.0.1</version>
 </dependency>
 ```
 
 #### Gradle
 
 ```groovy
-implementation group: 'com.trivago', name: 'fastutil-concurrent-wrapper', version: '0.0.x'
+implementation group: 'com.trivago', name: 'fastutil-concurrent-wrapper', version: '0.0.1'
 ```
 
 ## Usage
