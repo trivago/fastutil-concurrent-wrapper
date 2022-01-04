@@ -5,8 +5,8 @@ import com.trivago.fastutilconcurrentwrapper.map.ConcurrentLongLongMap;
 
 public final class ConcurrentLongLongMapBuilder {
     private MapMode mapMode = MapMode.BLOCKING;
-    private int buckets = 12;
-    private int initialCapacity = 300_000;
+    private int buckets = 8;
+    private int initialCapacity = 100_000;
     private float loadFactor = 0.8f;
     private long defaultValue = LongLongMap.DEFAULT_VALUE;
 

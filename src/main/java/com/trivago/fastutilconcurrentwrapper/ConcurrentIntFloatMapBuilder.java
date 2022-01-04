@@ -6,9 +6,9 @@ import com.trivago.fastutilconcurrentwrapper.map.ConcurrentIntFloatMap;
 public final class ConcurrentIntFloatMapBuilder {
 
     private MapMode mapMode = MapMode.BUSY_WAITING;
-    private int buckets = 12;
+    private int buckets = 8;
     private float defaultValue = 0.0f;
-    private int initialCapacity = 300_000;
+    private int initialCapacity = 100_000;
     private float loadFactor = 0.8f;
 
     private ConcurrentIntFloatMapBuilder() {

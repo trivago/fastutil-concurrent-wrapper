@@ -3,15 +3,13 @@ package com.trivago.fastutilconcurrentwrapper;
 import com.trivago.fastutilconcurrentwrapper.map.ConcurrentBusyWaitingLongFloatMap;
 import com.trivago.fastutilconcurrentwrapper.map.ConcurrentLongFloatMap;
 
-import static com.trivago.fastutilconcurrentwrapper.LongFloatMap.DEFAULT_VALUE;
-
 public final class ConcurrentLongFloatMapBuilder {
 
     private MapMode mapMode = MapMode.BLOCKING;
-    private int buckets = 12;
-    private int initialCapacity = 300_000;
+    private int buckets = 8;
+    private int initialCapacity = 100_000;
     private float loadFactor = 0.8f;
-    private float defaultValue = DEFAULT_VALUE;
+    private float defaultValue = LongFloatMap.DEFAULT_VALUE;
 
     private ConcurrentLongFloatMapBuilder() {
     }

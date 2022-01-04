@@ -7,12 +7,14 @@ Set of concurrent wrappers around [fastutil primitive maps](https://github.com/v
 Main purpose is to provide useful concurrent builders around 
 fastutil primitive maps with flexible locking policy.
 
-Advantages:
-- every map uses striped ReadWriteLocks, 
-- two lock modes: standard and busy-waiting (could be good for low-latency systems),
-- no extra memory on stack -- API based on primitive types.
+Advantages over [java.util wrappers](https://docs.oracle.com/javase/tutorial/collections/implementations/wrapper.html):
 
-Check [usage](#usage) section for more detains.
+- builders provide maps with buckets,
+- every map uses `striped ReadWriteLocks` instead of `synchronized(mutex)`; one RW-lock per map's bucket, 
+- two lock modes: `standard` and `busy-waiting` (could be good for low-latency systems),
+- no extra memory on stack -- API based on `primitive types`.
+
+Check [usage](#usage) section for more details.
 
 _Note_: currently the lib contains wrappers not for every primitive map. Feel free to contribute.
 
@@ -38,11 +40,11 @@ implementation group: 'com.trivago', name: 'fastutil-concurrent-wrapper', versio
 ## Usage
 
 ### Builder options
-- number of buckets -- number of buckets in the map,
-- default value -- default value, for _getOrDefault()_ method
-- initial capacity -- initial map capacity,
-- concurrent mode -- lock mode: default and busy-waiting,
-- load factor -- map load factor.
+- `number of buckets` -- number of buckets in the map (default `8`),
+- `default value` -- default value, for _getOrDefault()_ method
+- `initial capacity` -- initial map capacity (default `100_000`),
+- `concurrent mode` -- lock mode: _default_ and _busy-waiting_,
+- `load factor` -- map load factor (default `0.8f`).
 
 ### Basic usage
 
@@ -56,7 +58,7 @@ ConcurrentLongLongMapBuilder b = ConcurrentLongLongMapBuilder.newBuilder()
 
 LongLongMap map = b.build();
 
-map.put(1L,10L);
+map.put(1L, 10L);
 long v = map.get(1L);
 
 ```
@@ -66,10 +68,17 @@ Examples of creation and usage could be found inside
 
 ### MapMode
 
-Currently, for most of the maps we offer two locking modes:
+Currently, we offer two locking modes:
 
-- blocking (default),
-- busy-waiting.
+- `blocking` (default),
+- `busy-waiting`.
+
+## Maintainers
+A-Z surname order
+
+- [@mchernyakov](https://github.com/mchernyakov)
+- [@erdoganf](https://github.com/erdoganf)
+- [@sarveswaran-m](https://github.com/sarveswaran-m)
 
 ## Roadmap
 
