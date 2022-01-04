@@ -1,5 +1,7 @@
 # FastUtil Concurrent Wrapper
 
+![Java CI](https://github.com/trivago/fastutil-concurrent-wrapper/actions/workflows/gradle.yml/badge.svg)
+
 ## Description
 
 Set of concurrent wrappers around [fastutil primitive maps](https://github.com/vigna/fastutil).
@@ -79,10 +81,3 @@ A-Z surname order
 - [@mchernyakov](https://github.com/mchernyakov)
 - [@erdoganf](https://github.com/erdoganf)
 - [@sarveswaran-m](https://github.com/sarveswaran-m)
-
-## Roadmap
-
-- [ ] tests
-- [ ] CI
-- [ ] general builder
-- [ ] wrappers for every map
