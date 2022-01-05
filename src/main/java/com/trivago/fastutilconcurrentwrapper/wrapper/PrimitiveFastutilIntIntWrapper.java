@@ -23,8 +23,18 @@ public class PrimitiveFastutilIntIntWrapper implements IntIntMap {
     }
 
     @Override
+    public int getDefaultValue() {
+        return defaultValue;
+    }
+
+    @Override
     public int remove(int key) {
         return map.remove(key);
+    }
+
+    @Override
+    public boolean remove(int key, int value) {
+        return map.remove(key, value);
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.trivago.fastutilconcurrentwrapper.map;
 
 import com.trivago.fastutilconcurrentwrapper.LongFloatMap;
 import com.trivago.fastutilconcurrentwrapper.wrapper.PrimitiveFastutilLongFloatWrapper;
-
 import java.util.concurrent.locks.Lock;
 
 public class ConcurrentLongFloatMap extends PrimitiveConcurrentMap implements LongFloatMap {
@@ -94,6 +93,19 @@ public class ConcurrentLongFloatMap extends PrimitiveConcurrentMap implements Lo
         writeLock.lock();
         try {
             return maps[bucket].remove(key);
+        } finally {
+            writeLock.unlock();
+        }
+    }
+
+    @Override
+    public boolean remove(long key, float value) {
+        int bucket = getBucket(key);
+
+        Lock writeLock = locks[bucket].writeLock();
+        writeLock.lock();
+        try {
+            return maps[bucket].remove(key, value);
         } finally {
             writeLock.unlock();
         }

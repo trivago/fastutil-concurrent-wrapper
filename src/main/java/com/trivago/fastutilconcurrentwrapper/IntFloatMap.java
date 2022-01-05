@@ -8,5 +8,9 @@ public interface IntFloatMap extends PrimitiveIntKeyMap {
 
     float put(int key, float value);
 
+    float getDefaultValue();
+
     float remove(int key);
+
+    boolean remove(int key, float value);
 }

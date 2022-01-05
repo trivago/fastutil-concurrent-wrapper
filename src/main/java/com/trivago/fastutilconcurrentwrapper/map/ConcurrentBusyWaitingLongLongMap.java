@@ -8,13 +8,17 @@ import java.util.concurrent.locks.Lock;
 public class ConcurrentBusyWaitingLongLongMap extends PrimitiveConcurrentMap implements LongLongMap {
 
     private final LongLongMap[] maps;
+    private final long defaultValue;
 
     public ConcurrentBusyWaitingLongLongMap(int numBuckets,
                                             int initialCapacity,
                                             float loadFactor,
                                             long defaultValue) {
         super(numBuckets);
+
         this.maps = new LongLongMap[numBuckets];
+        this.defaultValue = defaultValue;
+
         for (int i = 0; i < numBuckets; i++) {
             maps[i] = new PrimitiveFastutilLongLongWrapper(initialCapacity, loadFactor, defaultValue);
         }
@@ -82,6 +86,11 @@ public class ConcurrentBusyWaitingLongLongMap extends PrimitiveConcurrentMap imp
     }
 
     @Override
+    public long getDefaultValue() {
+        return defaultValue;
+    }
+
+    @Override
     public long remove(long key) {
         int bucket = getBucket(key);
 
@@ -91,6 +100,23 @@ public class ConcurrentBusyWaitingLongLongMap extends PrimitiveConcurrentMap imp
             if (writeLock.tryLock()) {
                 try {
                     return maps[bucket].remove(key);
+                } finally {
+                    writeLock.unlock();
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean remove(long key, long value) {
+        int bucket = getBucket(key);
+
+        Lock writeLock = locks[bucket].writeLock();
+
+        while (true) {
+            if (writeLock.tryLock()) {
+                try {
+                    return maps[bucket].remove(key, value);
                 } finally {
                     writeLock.unlock();
                 }

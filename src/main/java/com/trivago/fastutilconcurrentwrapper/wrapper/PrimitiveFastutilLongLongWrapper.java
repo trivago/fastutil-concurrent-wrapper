@@ -27,8 +27,18 @@ public class PrimitiveFastutilLongLongWrapper implements LongLongMap {
     }
 
     @Override
+    public long getDefaultValue() {
+        return defaultValue;
+    }
+
+    @Override
     public long remove(long key) {
         return map.remove(key);
+    }
+
+    @Override
+    public boolean remove(long key, long value) {
+        return map.remove(key, value);
     }
 
     @Override

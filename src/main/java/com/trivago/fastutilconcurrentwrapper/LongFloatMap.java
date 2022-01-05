@@ -15,4 +15,12 @@ public interface LongFloatMap extends PrimitiveLongKeyMap {
     float getDefaultValue();
 
     float remove(long key);
+
+    /**
+     * Remove this key only if it has the given value.
+     * @param key
+     * @param value
+     * @return
+     */
+    boolean remove(long key, float value);
 }

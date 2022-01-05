@@ -12,5 +12,9 @@ public interface LongLongMap extends PrimitiveLongKeyMap {
 
     long put(long key, long value);
 
+    long getDefaultValue();
+
     long remove(long key);
+
+    boolean remove(long key, long value);
 }

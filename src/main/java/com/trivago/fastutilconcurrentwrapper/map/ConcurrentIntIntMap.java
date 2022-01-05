@@ -2,12 +2,12 @@ package com.trivago.fastutilconcurrentwrapper.map;
 
 import com.trivago.fastutilconcurrentwrapper.IntIntMap;
 import com.trivago.fastutilconcurrentwrapper.wrapper.PrimitiveFastutilIntIntWrapper;
-
 import java.util.concurrent.locks.Lock;
 
 public class ConcurrentIntIntMap extends PrimitiveConcurrentMap implements IntIntMap {
 
     private final IntIntMap[] maps;
+    private final int defaultValue;
 
     public ConcurrentIntIntMap(
             int numBuckets,
@@ -18,6 +18,7 @@ public class ConcurrentIntIntMap extends PrimitiveConcurrentMap implements IntIn
         super(numBuckets);
 
         this.maps = new IntIntMap[numBuckets];
+        this.defaultValue = defaultValue;
 
         for (int i = 0; i < numBuckets; i++) {
             maps[i] = new PrimitiveFastutilIntIntWrapper(initialCapacity, loadFactor, defaultValue);
@@ -82,6 +83,11 @@ public class ConcurrentIntIntMap extends PrimitiveConcurrentMap implements IntIn
     }
 
     @Override
+    public int getDefaultValue() {
+        return defaultValue;
+    }
+
+    @Override
     public int remove(int key) {
         int bucket = getBucket(key);
 
@@ -89,6 +95,19 @@ public class ConcurrentIntIntMap extends PrimitiveConcurrentMap implements IntIn
         writeLock.lock();
         try {
             return maps[bucket].remove(key);
+        } finally {
+            writeLock.unlock();
+        }
+    }
+
+    @Override
+    public boolean remove(int key, int value) {
+        int bucket = getBucket(key);
+
+        Lock writeLock = locks[bucket].writeLock();
+        writeLock.lock();
+        try {
+            return maps[bucket].remove(key, value);
         } finally {
             writeLock.unlock();
         }
