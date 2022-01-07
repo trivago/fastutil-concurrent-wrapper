@@ -24,8 +24,18 @@ public class PrimitiveFastutilIntFloatWrapper implements IntFloatMap {
     }
 
     @Override
+    public float getDefaultValue() {
+        return defaultValue;
+    }
+
+    @Override
     public float remove(int key) {
         return int2FloatOpenHashMap.remove(key);
+    }
+
+    @Override
+    public boolean remove(int key, float value) {
+        return int2FloatOpenHashMap.remove(key, value);
     }
 
     @Override

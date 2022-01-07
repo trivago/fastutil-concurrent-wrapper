@@ -8,15 +8,17 @@ import java.util.concurrent.locks.Lock;
 public class ConcurrentBusyWaitingIntFloatMap extends PrimitiveConcurrentMap implements IntFloatMap {
 
     private final IntFloatMap[] maps;
-    private final float defauldValue;
+    private final float defaultValue;
 
     public ConcurrentBusyWaitingIntFloatMap(int numBuckets,
                                             int initialCapacity,
                                             float loadFactor,
                                             float defaultValue) {
         super(numBuckets);
-        this.defauldValue = defaultValue;
+
         this.maps = new IntFloatMap[numBuckets];
+        this.defaultValue = defaultValue;
+
         for (int i = 0; i < numBuckets; i++) {
             maps[i] = new PrimitiveFastutilIntFloatWrapper(initialCapacity, loadFactor, defaultValue);
         }
@@ -84,6 +86,11 @@ public class ConcurrentBusyWaitingIntFloatMap extends PrimitiveConcurrentMap imp
     }
 
     @Override
+    public float getDefaultValue() {
+        return defaultValue;
+    }
+
+    @Override
     public float remove(int key) {
         int bucket = getBucket(key);
 
@@ -93,6 +100,23 @@ public class ConcurrentBusyWaitingIntFloatMap extends PrimitiveConcurrentMap imp
             if (writeLock.tryLock()) {
                 try {
                     return maps[bucket].remove(key);
+                } finally {
+                    writeLock.unlock();
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean remove(int key, float value) {
+        int bucket = getBucket(key);
+
+        Lock writeLock = locks[bucket].writeLock();
+
+        while (true) {
+            if (writeLock.tryLock()) {
+                try {
+                    return maps[bucket].remove(key, value);
                 } finally {
                     writeLock.unlock();
                 }

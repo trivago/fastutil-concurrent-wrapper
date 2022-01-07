@@ -12,5 +12,9 @@ public interface IntIntMap extends PrimitiveIntKeyMap {
 
     int put(int key, int value);
 
+    int getDefaultValue();
+
     int remove(int key);
+
+    boolean remove(int key, int value);
 }

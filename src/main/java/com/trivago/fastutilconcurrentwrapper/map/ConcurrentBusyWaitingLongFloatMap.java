@@ -104,4 +104,21 @@ public class ConcurrentBusyWaitingLongFloatMap extends PrimitiveConcurrentMap im
             }
         }
     }
+
+    @Override
+    public boolean remove(long key, float value) {
+        int bucket = getBucket(key);
+
+        Lock writeLock = locks[bucket].writeLock();
+
+        while (true) {
+            if (writeLock.tryLock()) {
+                try {
+                    return maps[bucket].remove(key, value);
+                } finally {
+                    writeLock.unlock();
+                }
+            }
+        }
+    }
 }

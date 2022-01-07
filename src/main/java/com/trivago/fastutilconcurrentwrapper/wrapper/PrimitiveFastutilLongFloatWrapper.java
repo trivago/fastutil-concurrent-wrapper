@@ -33,6 +33,11 @@ public class PrimitiveFastutilLongFloatWrapper implements LongFloatMap {
     }
 
     @Override
+    public boolean remove(long key, float value) {
+        return map.remove(key, value);
+    }
+
+    @Override
     public int size() {
         return map.size();
     }
