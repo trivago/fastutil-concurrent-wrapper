@@ -30,14 +30,14 @@ _Note_: currently the lib contains wrappers not for every primitive map. Feel fr
 <dependency>
     <groupId>com.trivago</groupId>
     <artifactId>fastutil-concurrent-wrapper</artifactId>
-    <version>0.0.1</version>
+    <version>0.1.0</version>
 </dependency>
 ```
 
 #### Gradle
 
 ```groovy
-implementation group: 'com.trivago', name: 'fastutil-concurrent-wrapper', version: '0.0.1'
+implementation group: 'com.trivago', name: 'fastutil-concurrent-wrapper', version: '0.1.0'
 ```
 
 ## Usage
