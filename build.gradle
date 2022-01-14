@@ -1,19 +1,21 @@
-buildscript {
+plugins {
+    id "idea"
+    id "java-library"
+    id "me.champeau.jmh" version "0.6.6"
+    id "com.vanniktech.maven.publish" version "0.18.0"
+}
+
+allprojects {
     repositories {
         mavenLocal()
         mavenCentral()
-    }
-    dependencies {
-        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.18.0'
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
 }
 
-repositories {
-    mavenCentral()
-}
-
-apply plugin: 'java'
-apply plugin: "com.vanniktech.maven.publish"
+applicationDefaultJvmArgs = ["-Xms1024m", "-Xmx2048m"]
 
 group 'com.trivago'
 version '0.1.1-SNAPSHOT'
@@ -21,11 +23,19 @@ version '0.1.1-SNAPSHOT'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+sourceSets {
+    jmh {
+        java.srcDirs = ['src/jmh/java']
+        resources.srcDirs = ['src/jmh/resources']
+        compileClasspath += sourceSets.main.runtimeClasspath
+    }
+}
+
 dependencies {
     implementation group: 'it.unimi.dsi', name: 'fastutil', version: '8.5.6'
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 }
 
 test {
@@ -46,4 +56,10 @@ publishing {
             url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
         }
     }
+}
+
+// ./gradlew jmh
+jmh {
+    jvmArgs = ["-Xms3072m","-Xmx3072m"]
+    duplicateClassesStrategy = DuplicatesStrategy.EXCLUDE
 }
