@@ -85,11 +85,11 @@ For running JMH tests just execute:
 
 Results for `FastutilWrapper BusyWaiting mode` vs `FastutilWrapper Default mode` vs [java.util wrappers](https://docs.oracle.com/javase/tutorial/collections/implementations/wrapper.html)
 
-(for Throughput more is better, for AverageTime less is better):
-
-Throughput
+Throughput (more is better)
 
 ```shell
+Benchmark                                                        Mode  Cnt         Score         Error  Units
+
 FastutilWrapperBusyWaitingBenchmark.testRandomAllOpsThroughput  thrpt   15  14517457,055 ?  795637,784  ops/s
 FastutilWrapperBusyWaitingBenchmark.testRandomGetThroughput     thrpt   15  16610181,320 ? 1456776,589  ops/s
 FastutilWrapperBusyWaitingBenchmark.testRandomPutThroughput     thrpt   13  11706178,916 ? 2547333,524  ops/s
@@ -102,9 +102,11 @@ JavaUtilWrapperBenchmark.testRandomAllOpsThroughput             thrpt   15   492
 JavaUtilWrapperBenchmark.testRandomGetThroughput                thrpt   15   7827123,690 ?  557193,670  ops/s
 JavaUtilWrapperBenchmark.testRandomPutThroughput                thrpt   15   4832517,371 ? 1122344,647  ops/s
 ```
-AverageTime per ops
+AverageTime per ops (less is better)
 
 ```shell
+Benchmark                                                        Mode  Cnt         Score         Error  Units
+
 FastutilWrapperBusyWaitingBenchmark.testRandomAllOpsAvgTime      avgt   15       268,790 ?      22,526  ns/op
 FastutilWrapperBusyWaitingBenchmark.testRandomGetAvgTime         avgt   15       231,552 ?      16,116  ns/op
 FastutilWrapperBusyWaitingBenchmark.testRandomPutAvgTime         avgt   10       292,246 ?      49,757  ns/op
