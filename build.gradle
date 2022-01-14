@@ -15,8 +15,6 @@ allprojects {
     }
 }
 
-applicationDefaultJvmArgs = ["-Xms1024m", "-Xmx2048m"]
-
 group 'com.trivago'
 version '0.1.1-SNAPSHOT'
 
