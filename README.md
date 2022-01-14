@@ -76,6 +76,57 @@ Currently, we offer two locking modes:
 - `blocking` (default),
 - `busy-waiting`.
 
+### JMH tests
+
+For running JMH tests just execute:
+```bash
+./gradlew jmh
+```
+
+Results for `FastutilWrapper BusyWaiting mode` vs `FastutilWrapper Default mode` vs [java.util wrappers](https://docs.oracle.com/javase/tutorial/collections/implementations/wrapper.html)
+
+Throughput (more is better)
+
+```shell
+Benchmark                                                        Mode  Cnt         Score         Error  Units
+
+FastutilWrapperBusyWaitingBenchmark.testRandomAllOpsThroughput  thrpt   15  14517457,055 ?  795637,784  ops/s
+FastutilWrapperBusyWaitingBenchmark.testRandomGetThroughput     thrpt   15  16610181,320 ? 1456776,589  ops/s
+FastutilWrapperBusyWaitingBenchmark.testRandomPutThroughput     thrpt   13  11706178,916 ? 2547333,524  ops/s
+
+FastutilWrapperDefaultBenchmark.testRandomAllOpsThroughput      thrpt   15   7385357,514 ? 1127356,032  ops/s
+FastutilWrapperDefaultBenchmark.testRandomGetThroughput         thrpt   15  16190621,923 ? 1836415,022  ops/s
+FastutilWrapperDefaultBenchmark.testRandomPutThroughput         thrpt   15   8945369,395 ? 1225460,217  ops/s
+
+JavaUtilWrapperBenchmark.testRandomAllOpsThroughput             thrpt   15   4921201,916 ?  410471,239  ops/s
+JavaUtilWrapperBenchmark.testRandomGetThroughput                thrpt   15   7827123,690 ?  557193,670  ops/s
+JavaUtilWrapperBenchmark.testRandomPutThroughput                thrpt   15   4832517,371 ? 1122344,647  ops/s
+```
+AverageTime per ops (less is better)
+
+```shell
+Benchmark                                                        Mode  Cnt         Score         Error  Units
+
+FastutilWrapperBusyWaitingBenchmark.testRandomAllOpsAvgTime      avgt   15       268,790 ?      22,526  ns/op
+FastutilWrapperBusyWaitingBenchmark.testRandomGetAvgTime         avgt   15       231,552 ?      16,116  ns/op
+FastutilWrapperBusyWaitingBenchmark.testRandomPutAvgTime         avgt   10       292,246 ?      49,757  ns/op
+
+FastutilWrapperDefaultBenchmark.testRandomAllOpsAvgTime          avgt   15       467,381 ?       9,790  ns/op
+FastutilWrapperDefaultBenchmark.testRandomGetAvgTime             avgt   15       237,683 ?      14,167  ns/op
+FastutilWrapperDefaultBenchmark.testRandomPutAvgTime             avgt   15       427,441 ?      25,116  ns/op
+
+JavaUtilWrapperBenchmark.testRandomAllOpsAvgTime                 avgt   15       781,869 ?     191,081  ns/op
+JavaUtilWrapperBenchmark.testRandomGetAvgTime                    avgt   15       470,869 ?      33,198  ns/op
+JavaUtilWrapperBenchmark.testRandomPutAvgTime                    avgt   15       964,613 ?     422,648  ns/op
+```
+
+The machine
+```shell
+MacBook Pro (15-inch, 2019)
+Processor 2,6 GHz 6-Core Intel Core i7
+Memory 16 GB 2400 MHz DDR4
+```
+
 ## Maintainers
 A-Z surname order
 
