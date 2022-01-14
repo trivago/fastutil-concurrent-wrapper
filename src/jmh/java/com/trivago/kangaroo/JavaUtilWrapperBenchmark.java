@@ -21,7 +21,7 @@ public class JavaUtilWrapperBenchmark extends AbstractCommonBenchHelper {
 
     @Setup(Level.Trial)
     public void loadData() {
-        Long2LongOpenHashMap m = new Long2LongOpenHashMap(1_000_000, 0.8f);
+        Long2LongOpenHashMap m = new Long2LongOpenHashMap(AbstractBenchHelper.NUM_VALUES, 0.8f);
         for (int i = 0; i < AbstractBenchHelper.NUM_VALUES; i++) {
             long key = ThreadLocalRandom.current().nextLong();
             long value = ThreadLocalRandom.current().nextLong();

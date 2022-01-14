@@ -15,14 +15,14 @@ public abstract class AbstractBenchHelper extends AbstractCommonBenchHelper {
         if (mode.equals(ConcurrentLongLongMapBuilder.MapMode.BUSY_WAITING)) {
             map = ConcurrentLongLongMapBuilder.newBuilder()
                     .withBuckets(16)
-                    .withInitialCapacity(5_000_000)
+                    .withInitialCapacity(NUM_VALUES)
                     .withMode(ConcurrentLongLongMapBuilder.MapMode.BUSY_WAITING)
                     .withLoadFactor(0.8f)
                     .build();
         } else {
             map = ConcurrentLongLongMapBuilder.newBuilder()
                     .withBuckets(16)
-                    .withInitialCapacity(5_000_000)
+                    .withInitialCapacity(NUM_VALUES)
                     .withLoadFactor(0.8f)
                     .build();
         }
