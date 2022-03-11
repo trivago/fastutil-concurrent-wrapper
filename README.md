@@ -7,6 +7,8 @@
 
 Set of concurrent wrappers around [fastutil primitive maps](https://github.com/vigna/fastutil).
 
+[How we use it in trivago.](https://tech.trivago.com/post/2022-03-09-why-and-how-we-use-primitive-maps)
+
 Main purpose is to provide useful concurrent builders around 
 fastutil primitive maps with flexible locking policy.
 
