@@ -2,7 +2,10 @@ package com.trivago.fastutilconcurrentwrapper.map;
 
 import com.trivago.fastutilconcurrentwrapper.LongLongMap;
 import com.trivago.fastutilconcurrentwrapper.wrapper.PrimitiveFastutilLongLongWrapper;
+import it.unimi.dsi.fastutil.longs.Long2LongFunction;
+
 import java.util.concurrent.locks.Lock;
+import java.util.function.BiFunction;
 
 public class ConcurrentLongLongMap extends PrimitiveConcurrentMap implements LongLongMap {
 
@@ -106,6 +109,32 @@ public class ConcurrentLongLongMap extends PrimitiveConcurrentMap implements Lon
         writeLock.lock();
         try {
             return maps[bucket].remove(key, value);
+        } finally {
+            writeLock.unlock();
+        }
+    }
+
+    @Override
+    public long computeIfAbsent(long key, Long2LongFunction mappingFunction) {
+        int bucket = getBucket(key);
+
+        Lock writeLock = locks[bucket].writeLock();
+        writeLock.lock();
+        try {
+            return maps[bucket].computeIfAbsent(key, mappingFunction);
+        } finally {
+            writeLock.unlock();
+        }
+    }
+
+    @Override
+    public long computeIfPresent(long key, BiFunction<Long, Long, Long> mappingFunction) {
+        int bucket = getBucket(key);
+
+        Lock writeLock = locks[bucket].writeLock();
+        writeLock.lock();
+        try {
+            return maps[bucket].computeIfPresent(key, mappingFunction);
         } finally {
             writeLock.unlock();
         }

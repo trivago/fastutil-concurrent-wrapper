@@ -1,7 +1,10 @@
 package com.trivago.fastutilconcurrentwrapper.wrapper;
 
 import com.trivago.fastutilconcurrentwrapper.IntIntMap;
+import it.unimi.dsi.fastutil.ints.Int2IntFunction;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
+
+import java.util.function.BiFunction;
 
 public class PrimitiveFastutilIntIntWrapper implements IntIntMap {
     private final int defaultValue;
@@ -50,5 +53,15 @@ public class PrimitiveFastutilIntIntWrapper implements IntIntMap {
     @Override
     public boolean isEmpty() {
         return map.isEmpty();
+    }
+
+    @Override
+    public int computeIfAbsent(int key, Int2IntFunction mappingFunction) {
+        return map.computeIfAbsent(key, mappingFunction);
+    }
+
+    @Override
+    public int computeIfPresent(int key, BiFunction<Integer, Integer, Integer> mappingFunction) {
+        return map.computeIfPresent(key, mappingFunction);
     }
 }
