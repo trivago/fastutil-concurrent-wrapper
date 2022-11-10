@@ -165,7 +165,7 @@ abstract class AbstractLongLongMapTest {
   }
 
   @Test
-  void puttingValueIfNotExistsReturnsSameValue() {
+  void puttingValueIfAbsentReturnsSameValue() {
     long key = random.nextLong();
     long value = random.nextLong();
     map.computeIfAbsent(key, l -> value);
@@ -176,7 +176,20 @@ abstract class AbstractLongLongMapTest {
   }
 
   @Test
-  void replacingValueIfExistsReturnsNewValue() {
+  void checkingValueIfNotAbsentReturnsSameValue() {
+    long key = random.nextLong();
+    long value = random.nextLong();
+    map.put(key, value);
+    long returned = map.computeIfAbsent(key, l -> value);
+
+    long result = map.get(key);
+
+    assertEquals(result, value);
+    assertEquals(returned, returned);
+  }
+
+  @Test
+  void replacingValueIfPresentReturnsNewValue() {
     long key = random.nextLong();
     long value = random.nextLong();
     map.put(key, value);
@@ -186,5 +199,15 @@ abstract class AbstractLongLongMapTest {
     long result = map.get(key);
 
     assertEquals(result, key + value);
+  }
+
+  @Test
+  void checkingValueIfNotPresentReturnsDefaultValue() {
+    long key = random.nextLong();
+    map.computeIfPresent(key, Long::sum);
+
+    long result = map.get(key);
+
+    assertEquals(result, map.getDefaultValue());
   }
 }
