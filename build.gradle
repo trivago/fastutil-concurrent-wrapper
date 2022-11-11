@@ -18,6 +18,38 @@ allprojects {
 group 'com.trivago'
 version '0.1.1-SNAPSHOT'
 
+mavenPublishing {
+    pom {
+        name = "fastutil-concurrent-wrapper"
+        description = "Set of concurrent wrappers around fastutil primitive maps."
+        url = "https://github.com/trivago/fastutil-concurrent-wrapper"
+        licenses {
+            license {
+                name = "The Apache Software License, Version 2.0"
+                url = "https://opensource.org/licenses/Apache-2.0"
+                distribution = "repo"
+            }
+        }
+        developers {
+            developer {
+                id = "mchernyakov"
+                name = "Mikhail Chernyakov"
+                url = "https://github.com/mchernyakov"
+            }
+            developer {
+                id = "erdoganf"
+                name = "Fehim Erdogan"
+                url = "https://github.com/erdoganf"
+            }
+        }
+        scm {
+            url = "https://github.com/trivago/fastutil-concurrent-wrapper"
+            connection = "scm:git:https://github.com/trivago/fastutil-concurrent-wrapper"
+            developerConnection = "scm:git:https://github.com/trivago/fastutil-concurrent-wrapper"
+        }
+    }
+}
+
 sourceCompatibility = 11
 targetCompatibility = 11
 
