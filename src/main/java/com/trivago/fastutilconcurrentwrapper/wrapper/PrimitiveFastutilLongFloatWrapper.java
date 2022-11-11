@@ -1,7 +1,10 @@
 package com.trivago.fastutilconcurrentwrapper.wrapper;
 
 import com.trivago.fastutilconcurrentwrapper.LongFloatMap;
+import it.unimi.dsi.fastutil.longs.Long2FloatFunction;
 import it.unimi.dsi.fastutil.longs.Long2FloatOpenHashMap;
+
+import java.util.function.BiFunction;
 
 public class PrimitiveFastutilLongFloatWrapper implements LongFloatMap {
     private final float defaultValue;
@@ -50,5 +53,15 @@ public class PrimitiveFastutilLongFloatWrapper implements LongFloatMap {
     @Override
     public boolean isEmpty() {
         return map.isEmpty();
+    }
+
+    @Override
+    public float computeIfAbsent(long key, Long2FloatFunction mappingFunction) {
+        return map.computeIfAbsent(key, mappingFunction);
+    }
+
+    @Override
+    public float computeIfPresent(int key, BiFunction<Long, Float, Float> mappingFunction) {
+        return map.computeIfPresent(key, mappingFunction);
     }
 }

@@ -2,8 +2,10 @@ package com.trivago.fastutilconcurrentwrapper.map;
 
 import com.trivago.fastutilconcurrentwrapper.IntIntMap;
 import com.trivago.fastutilconcurrentwrapper.wrapper.PrimitiveFastutilIntIntWrapper;
+import it.unimi.dsi.fastutil.ints.Int2IntFunction;
 
 import java.util.concurrent.locks.Lock;
+import java.util.function.BiFunction;
 
 public class ConcurrentBusyWaitingIntIntMap extends PrimitiveConcurrentMap implements IntIntMap {
 
@@ -117,6 +119,40 @@ public class ConcurrentBusyWaitingIntIntMap extends PrimitiveConcurrentMap imple
             if (writeLock.tryLock()) {
                 try {
                     return maps[bucket].remove(key, value);
+                } finally {
+                    writeLock.unlock();
+                }
+            }
+        }
+    }
+
+    @Override
+    public int computeIfAbsent(int key, Int2IntFunction mappingFunction) {
+        int bucket = getBucket(key);
+
+        Lock writeLock = locks[bucket].writeLock();
+
+        while (true) {
+            if (writeLock.tryLock()) {
+                try {
+                    return maps[bucket].computeIfAbsent(key, mappingFunction);
+                } finally {
+                    writeLock.unlock();
+                }
+            }
+        }
+    }
+
+    @Override
+    public int computeIfPresent(int key, BiFunction<Integer, Integer, Integer> mappingFunction) {
+        int bucket = getBucket(key);
+
+        Lock writeLock = locks[bucket].writeLock();
+
+        while (true) {
+            if (writeLock.tryLock()) {
+                try {
+                    return maps[bucket].computeIfPresent(key, mappingFunction);
                 } finally {
                     writeLock.unlock();
                 }

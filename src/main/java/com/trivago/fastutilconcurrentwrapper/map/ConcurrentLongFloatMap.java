@@ -2,7 +2,10 @@ package com.trivago.fastutilconcurrentwrapper.map;
 
 import com.trivago.fastutilconcurrentwrapper.LongFloatMap;
 import com.trivago.fastutilconcurrentwrapper.wrapper.PrimitiveFastutilLongFloatWrapper;
+import it.unimi.dsi.fastutil.longs.Long2FloatFunction;
+
 import java.util.concurrent.locks.Lock;
+import java.util.function.BiFunction;
 
 public class ConcurrentLongFloatMap extends PrimitiveConcurrentMap implements LongFloatMap {
 
@@ -10,9 +13,9 @@ public class ConcurrentLongFloatMap extends PrimitiveConcurrentMap implements Lo
     private final float defaultValue;
 
     public ConcurrentLongFloatMap(int numBuckets,
-                           int initialCapacity,
-                           float loadFactor,
-                           float defaultValue) {
+                                  int initialCapacity,
+                                  float loadFactor,
+                                  float defaultValue) {
         super(numBuckets);
 
         this.maps = new LongFloatMap[numBuckets];
@@ -111,4 +114,29 @@ public class ConcurrentLongFloatMap extends PrimitiveConcurrentMap implements Lo
         }
     }
 
+    @Override
+    public float computeIfAbsent(long key, Long2FloatFunction mappingFunction) {
+        int bucket = getBucket(key);
+
+        Lock writeLock = locks[bucket].writeLock();
+        writeLock.lock();
+        try {
+            return maps[bucket].computeIfAbsent(key, mappingFunction);
+        } finally {
+            writeLock.unlock();
+        }
+    }
+
+    @Override
+    public float computeIfPresent(int key, BiFunction<Long, Float, Float> mappingFunction) {
+        int bucket = getBucket(key);
+
+        Lock writeLock = locks[bucket].writeLock();
+        writeLock.lock();
+        try {
+            return maps[bucket].computeIfPresent(key, mappingFunction);
+        } finally {
+            writeLock.unlock();
+        }
+    }
 }

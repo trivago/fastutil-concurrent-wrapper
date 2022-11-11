@@ -1,14 +1,15 @@
 package com.trivago.fastutilconcurrentwrapper.longlong;
 
+import com.trivago.fastutilconcurrentwrapper.LongLongMap;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import com.trivago.fastutilconcurrentwrapper.LongLongMap;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 abstract class AbstractLongLongMapTest {
 
@@ -161,5 +162,52 @@ abstract class AbstractLongLongMapTest {
     final boolean result = map.remove(key, value);
 
     assertTrue(result);
+  }
+
+  @Test
+  void puttingValueIfAbsentReturnsSameValue() {
+    long key = random.nextLong();
+    long value = random.nextLong();
+    map.computeIfAbsent(key, l -> value);
+
+    long result = map.get(key);
+
+    assertEquals(result, value);
+  }
+
+  @Test
+  void checkingValueIfNotAbsentReturnsSameValue() {
+    long key = random.nextLong();
+    long value = random.nextLong();
+    map.put(key, value);
+    long returned = map.computeIfAbsent(key, l -> value);
+
+    long result = map.get(key);
+
+    assertEquals(result, value);
+    assertEquals(returned, returned);
+  }
+
+  @Test
+  void replacingValueIfPresentReturnsNewValue() {
+    long key = random.nextLong();
+    long value = random.nextLong();
+    map.put(key, value);
+
+    map.computeIfPresent(key, Long::sum); // key + old value
+
+    long result = map.get(key);
+
+    assertEquals(result, key + value);
+  }
+
+  @Test
+  void checkingValueIfNotPresentReturnsDefaultValue() {
+    long key = random.nextLong();
+    map.computeIfPresent(key, Long::sum);
+
+    long result = map.get(key);
+
+    assertEquals(result, map.getDefaultValue());
   }
 }
