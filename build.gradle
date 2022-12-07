@@ -16,7 +16,7 @@ allprojects {
 }
 
 group 'com.trivago'
-version '0.2.1-SNAPSHOT'
+version '0.2.1'
 
 mavenPublishing {
     pom {
@@ -62,10 +62,10 @@ sourceSets {
 }
 
 dependencies {
-    implementation group: 'it.unimi.dsi', name: 'fastutil', version: '8.5.9'
+    api group: 'it.unimi.dsi', name: 'fastutil', version: '8.5.9'
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
 }
 
 test {
