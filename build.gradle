@@ -41,6 +41,11 @@ mavenPublishing {
                 name = "Fehim Erdogan"
                 url = "https://github.com/erdoganf"
             }
+            developer {
+                id = "sarveswaran-m"
+                name = "Sarveswaran Meenakshisundaram"
+                url = "https://github.com/sarveswaran-m"
+            }
         }
         scm {
             url = "https://github.com/trivago/fastutil-concurrent-wrapper"
@@ -50,8 +55,8 @@ mavenPublishing {
     }
 }
 
-sourceCompatibility = 11
-targetCompatibility = 11
+sourceCompatibility = 17
+targetCompatibility = 17
 
 sourceSets {
     jmh {
