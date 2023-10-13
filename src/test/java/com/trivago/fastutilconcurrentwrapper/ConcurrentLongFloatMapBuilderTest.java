@@ -1,15 +1,22 @@
 package com.trivago.fastutilconcurrentwrapper;
 
+import com.trivago.fastutilconcurrentwrapper.map.ConcurrentBusyWaitingLongFloatMap;
+import com.trivago.fastutilconcurrentwrapper.map.ConcurrentBusyWaitingLongIntMap;
+import com.trivago.fastutilconcurrentwrapper.map.ConcurrentLongFloatMap;
+import com.trivago.fastutilconcurrentwrapper.map.ConcurrentLongIntMap;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ConcurrentLongFloatMapBuilderTest {
+    private final float DEFAULT_VALUE = -1f;
+
     @Test
-    public void simpleBuilderTest() {
+    public void buildsBusyWaitingMap() {
         ConcurrentLongFloatMapBuilder b = ConcurrentLongFloatMapBuilder.newBuilder()
                 .withBuckets(2)
-                .withDefaultValue(0)
+                .withDefaultValue(DEFAULT_VALUE)
                 .withInitialCapacity(100)
                 .withMode(ConcurrentLongFloatMapBuilder.MapMode.BUSY_WAITING)
                 .withLoadFactor(0.8f);
@@ -18,14 +25,17 @@ public class ConcurrentLongFloatMapBuilderTest {
 
         map.put(1L, 10.1f);
         float v = map.get(1L);
+
+        assertTrue(map instanceof ConcurrentBusyWaitingLongFloatMap);
         assertEquals(10.1f, v);
+        assertEquals(map.get(2L), map.getDefaultValue());
     }
 
     @Test
-    public void simpleBuilderTest0() {
+    public void buildsBlockingMap() {
         ConcurrentLongFloatMapBuilder b = ConcurrentLongFloatMapBuilder.newBuilder()
                 .withBuckets(2)
-                .withDefaultValue(0)
+                .withDefaultValue(DEFAULT_VALUE)
                 .withInitialCapacity(100)
                 .withMode(ConcurrentLongFloatMapBuilder.MapMode.BLOCKING)
                 .withLoadFactor(0.8f);
@@ -34,21 +44,9 @@ public class ConcurrentLongFloatMapBuilderTest {
 
         map.put(1L, 10.1f);
         float v = map.get(1L);
+
+        assertTrue(map instanceof ConcurrentLongFloatMap);
         assertEquals(10.1f, v);
-    }
-
-    @Test
-    public void defaultValueTest() {
-        ConcurrentLongFloatMapBuilder b = ConcurrentLongFloatMapBuilder.newBuilder()
-                .withBuckets(2)
-                .withDefaultValue(22.22f)
-                .withInitialCapacity(100)
-                .withMode(ConcurrentLongFloatMapBuilder.MapMode.BLOCKING)
-                .withLoadFactor(0.8f);
-
-        LongFloatMap map = b.build();
-
-        float v = map.get(1L);
-        assertEquals(22.22f, v);
+        assertEquals(map.get(2L), map.getDefaultValue());
     }
 }
