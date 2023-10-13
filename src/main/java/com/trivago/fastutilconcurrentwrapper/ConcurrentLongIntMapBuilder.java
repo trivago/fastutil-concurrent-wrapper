@@ -1,9 +1,7 @@
 package com.trivago.fastutilconcurrentwrapper;
 
 import com.trivago.fastutilconcurrentwrapper.map.ConcurrentBusyWaitingLongIntMap;
-import com.trivago.fastutilconcurrentwrapper.map.ConcurrentBusyWaitingLongLongMap;
 import com.trivago.fastutilconcurrentwrapper.map.ConcurrentLongIntMap;
-import com.trivago.fastutilconcurrentwrapper.map.ConcurrentLongLongMap;
 
 public final class ConcurrentLongIntMapBuilder {
     private MapMode mapMode = MapMode.BLOCKING;
