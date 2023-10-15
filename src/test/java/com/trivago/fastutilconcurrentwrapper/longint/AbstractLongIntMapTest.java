@@ -5,6 +5,9 @@ import com.trivago.fastutilconcurrentwrapper.LongIntMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -20,13 +23,13 @@ abstract class AbstractLongIntMapTest extends AbstractMapTest {
 
     @BeforeEach
     void initializeMap() {
-        defaultValue = random.nextInt();
+        defaultValue = nextInt();
         map = createMap();
     }
 
     @Test
     protected void containsKeyReturnsFalseIfMapIsEmpty() {
-        final int key = random.nextInt();
+        final int key = nextInt();
 
         final boolean contains = map.containsKey(key);
 
@@ -35,8 +38,8 @@ abstract class AbstractLongIntMapTest extends AbstractMapTest {
 
     @Test
     protected void containsKeyReturnsTrueIfKeyExists() {
-        int key = random.nextInt();
-        int value = random.nextInt();
+        int key = nextInt();
+        int value = nextInt();
         map.put(key, value);
 
         final boolean contains = map.containsKey(key);
@@ -46,8 +49,8 @@ abstract class AbstractLongIntMapTest extends AbstractMapTest {
 
     @Test
     protected void containsKeyReturnsFalseIfKeyWasRemoved() {
-        int key = random.nextInt();
-        int value = random.nextInt();
+        int key = nextInt();
+        int value = nextInt();
         map.put(key, value);
         map.remove(key);
 
@@ -65,8 +68,8 @@ abstract class AbstractLongIntMapTest extends AbstractMapTest {
 
     @Test
     protected void mapIsEmptyWhenAllKeysAreDeleted() {
-        int entryCount = (Math.abs(random.nextInt()) % 100) + 1;
-        int value = random.nextInt();
+        int entryCount = (Math.abs(nextInt()) % 100) + 1;
+        int value = nextInt();
 
         for (int key = 1; key <= entryCount; key++) {
             map.put(key, value);
@@ -82,8 +85,8 @@ abstract class AbstractLongIntMapTest extends AbstractMapTest {
 
     @Test
     protected void sizeIsCorrect() {
-        int entries = (Math.abs(random.nextInt()) % 50) + 1;
-        int value = random.nextInt();
+        int entries = (Math.abs(nextInt()) % 50) + 1;
+        int value = nextInt();
 
         for (int key = 1; key <= entries; key++) {
             map.put(key, value);
@@ -96,8 +99,8 @@ abstract class AbstractLongIntMapTest extends AbstractMapTest {
 
     @Test
     protected void gettingExistingValueReturnsCorrectValue() {
-        int key = random.nextInt();
-        int value = random.nextInt();
+        int key = nextInt();
+        int value = nextInt();
         map.put(key, value);
         final int returnedValue = map.get(key);
 
@@ -106,7 +109,7 @@ abstract class AbstractLongIntMapTest extends AbstractMapTest {
 
     @Test
     protected void gettingNonExistingValueReturnsCorrectValue() {
-        int key = random.nextInt();
+        int key = nextInt();
         final int returnedValue = map.get(key);
 
         assertEquals(defaultValue, returnedValue);
@@ -114,7 +117,7 @@ abstract class AbstractLongIntMapTest extends AbstractMapTest {
 
     @Test
     protected void removingNonExistingKeyReturnsDefaultValue() {
-        int key = random.nextInt();
+        int key = nextInt();
         final int removedValue = map.remove(key);
 
         assertEquals(FASTUTIL_DEFAULT_VALUE, removedValue);
@@ -122,8 +125,8 @@ abstract class AbstractLongIntMapTest extends AbstractMapTest {
 
     @Test
     protected void removingExistingKeyReturnsPreviousValue() {
-        int key = random.nextInt();
-        int value = random.nextInt();
+        int key = nextInt();
+        int value = nextInt();
         map.put(key, value);
         final int removedValue = map.remove(key);
 
@@ -132,8 +135,8 @@ abstract class AbstractLongIntMapTest extends AbstractMapTest {
 
     @Test
     protected void removingWithValueWhenKeyDoesNotExistReturnsFalse() {
-        int key = random.nextInt();
-        int value = random.nextInt();
+        int key = nextInt();
+        int value = nextInt();
         final boolean result = map.remove(key, value);
 
         assertFalse(result);
@@ -141,8 +144,8 @@ abstract class AbstractLongIntMapTest extends AbstractMapTest {
 
     @Test
     protected void removingWithValueWhenValueIsDifferentReturnsFalse() {
-        int key = random.nextInt();
-        int value = random.nextInt();
+        int key = nextInt();
+        int value = nextInt();
         map.put(key, value);
         final boolean result = map.remove(key, value - 1);
 
@@ -151,8 +154,8 @@ abstract class AbstractLongIntMapTest extends AbstractMapTest {
 
     @Test
     protected void removingWithValueWhenValueIsSameReturnsTrue() {
-        int key = random.nextInt();
-        int value = random.nextInt();
+        int key = nextInt();
+        int value = nextInt();
         map.put(key, value);
         final boolean result = map.remove(key, value);
 
@@ -161,8 +164,8 @@ abstract class AbstractLongIntMapTest extends AbstractMapTest {
 
     @Test
     protected void puttingValueIfAbsentReturnsSameValue() {
-        int key = random.nextInt();
-        int value = random.nextInt();
+        int key = nextInt();
+        int value = nextInt();
         map.computeIfAbsent(key, l -> value);
 
         int result = map.get(key);
@@ -172,8 +175,8 @@ abstract class AbstractLongIntMapTest extends AbstractMapTest {
 
     @Test
     protected void checkingValueIfNotAbsentReturnsSameValue() {
-        int key = random.nextInt();
-        int value = random.nextInt();
+        int key = nextInt();
+        int value = nextInt();
         map.put(key, value);
         int returned = map.computeIfAbsent(key, l -> value);
 
@@ -185,8 +188,8 @@ abstract class AbstractLongIntMapTest extends AbstractMapTest {
 
     @Test
     protected void replacingValueIfPresentReturnsNewValue() {
-        int key = random.nextInt();
-        int value = random.nextInt();
+        int key = nextInt();
+        int value = nextInt();
         map.put(key, value);
 
         map.computeIfPresent(key, (aLongKey, anIntValue) -> 2 * anIntValue); // key + old value
@@ -198,7 +201,7 @@ abstract class AbstractLongIntMapTest extends AbstractMapTest {
 
     @Test
     protected void checkingValueIfNotPresentReturnsDefaultValue() {
-        int key = random.nextInt();
+        int key = nextInt();
         map.computeIfPresent(key, (aLongKey, anIntValue) -> 2 * anIntValue); // key + old value
 
         int result = map.get(key);

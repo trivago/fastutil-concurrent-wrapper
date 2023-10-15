@@ -2,7 +2,6 @@ package com.trivago.fastutilconcurrentwrapper;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 /*
@@ -10,10 +9,8 @@ import java.util.concurrent.ThreadLocalRandom;
  *  test cases have to be repeated for each typed map interface.
  */
 public abstract class AbstractMapTest {
-    protected final Random random = ThreadLocalRandom.current();
-
     @Test
-    protected abstract  void containsKeyReturnsFalseIfMapIsEmpty();
+    protected abstract void containsKeyReturnsFalseIfMapIsEmpty();
 
     @Test
     protected abstract void containsKeyReturnsTrueIfKeyExists();
@@ -62,4 +59,12 @@ public abstract class AbstractMapTest {
 
     @Test
     protected abstract void checkingValueIfNotPresentReturnsDefaultValue();
+
+    protected static long nextLong() {
+        return ThreadLocalRandom.current().nextLong();
+    }
+
+    protected static int nextInt() {
+        return ThreadLocalRandom.current().nextInt();
+    }
 }
