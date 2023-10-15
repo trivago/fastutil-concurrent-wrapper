@@ -9,6 +9,14 @@ import java.util.concurrent.ThreadLocalRandom;
  *  test cases have to be repeated for each typed map interface.
  */
 public abstract class AbstractMapTest {
+    protected static long nextLong() {
+        return ThreadLocalRandom.current().nextLong();
+    }
+
+    protected static int nextInt() {
+        return ThreadLocalRandom.current().nextInt();
+    }
+
     @Test
     protected abstract void containsKeyReturnsFalseIfMapIsEmpty();
 
@@ -59,12 +67,4 @@ public abstract class AbstractMapTest {
 
     @Test
     protected abstract void checkingValueIfNotPresentReturnsDefaultValue();
-
-    protected static long nextLong() {
-        return ThreadLocalRandom.current().nextLong();
-    }
-
-    protected static int nextInt() {
-        return ThreadLocalRandom.current().nextInt();
-    }
 }

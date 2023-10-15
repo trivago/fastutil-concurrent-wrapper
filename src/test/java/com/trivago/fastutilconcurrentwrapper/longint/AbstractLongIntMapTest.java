@@ -5,19 +5,17 @@ import com.trivago.fastutilconcurrentwrapper.LongIntMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 abstract class AbstractLongIntMapTest extends AbstractMapTest {
-    private LongIntMap map;
-    // Keep the default value to easily verify that this value is returned.
-    protected int defaultValue;
     // Some methods return the default value of the underlying Fastutil implementation.
     private static final int FASTUTIL_DEFAULT_VALUE = 0;
+
+    protected int defaultValue;
+    private LongIntMap map;
+    // Keep the default value to easily verify that this value is returned.
 
     abstract LongIntMap createMap();
 

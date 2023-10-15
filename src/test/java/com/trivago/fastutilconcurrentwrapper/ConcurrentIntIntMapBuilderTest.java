@@ -1,9 +1,7 @@
 package com.trivago.fastutilconcurrentwrapper;
 
 import com.trivago.fastutilconcurrentwrapper.map.ConcurrentBusyWaitingIntIntMap;
-import com.trivago.fastutilconcurrentwrapper.map.ConcurrentBusyWaitingLongIntMap;
 import com.trivago.fastutilconcurrentwrapper.map.ConcurrentIntIntMap;
-import com.trivago.fastutilconcurrentwrapper.map.ConcurrentLongIntMap;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
