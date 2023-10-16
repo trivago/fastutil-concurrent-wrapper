@@ -16,7 +16,7 @@ allprojects {
 }
 
 group 'com.trivago'
-version '0.2.2-SNAPSHOT'
+version '0.2.2'
 
 mavenPublishing {
     pom {
@@ -40,6 +40,11 @@ mavenPublishing {
                 id = "erdoganf"
                 name = "Fehim Erdogan"
                 url = "https://github.com/erdoganf"
+            }
+            developer {
+                id = "sarveswaran-m"
+                name = "Sarveswaran Meenakshisundaram"
+                url = "https://github.com/sarveswaran-m"
             }
         }
         scm {

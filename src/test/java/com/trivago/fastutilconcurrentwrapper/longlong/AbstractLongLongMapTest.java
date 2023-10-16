@@ -1,20 +1,15 @@
 package com.trivago.fastutilconcurrentwrapper.longlong;
 
+import com.trivago.fastutilconcurrentwrapper.AbstractMapTest;
 import com.trivago.fastutilconcurrentwrapper.LongLongMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-abstract class AbstractLongLongMapTest {
-
-  private final Random random = ThreadLocalRandom.current();
-
+abstract class AbstractLongLongMapTest extends AbstractMapTest {
   private LongLongMap map;
   // Keep the default value to easily verify that this value is returned.
   protected long defaultValue;
@@ -25,13 +20,13 @@ abstract class AbstractLongLongMapTest {
 
   @BeforeEach
   void initializeMap() {
-    defaultValue = random.nextLong();
+    defaultValue = nextLong();
     map = createMap();
   }
 
   @Test
-  void containsKeyReturnsFalseIfMapIsEmpty() {
-    final long key = random.nextLong();
+  protected void containsKeyReturnsFalseIfMapIsEmpty() {
+    final long key = nextLong();
 
     final boolean contains = map.containsKey(key);
 
@@ -39,9 +34,9 @@ abstract class AbstractLongLongMapTest {
   }
 
   @Test
-  void containsKeyReturnsTrueIfKeyExists() {
-    long key = random.nextLong();
-    long value = random.nextLong();
+  protected void containsKeyReturnsTrueIfKeyExists() {
+    long key = nextLong();
+    long value = nextLong();
     map.put(key, value);
 
     final boolean contains = map.containsKey(key);
@@ -50,9 +45,9 @@ abstract class AbstractLongLongMapTest {
   }
 
   @Test
-  void containsKeyReturnsFalseIfKeyWasRemoved() {
-    long key = random.nextLong();
-    long value = random.nextLong();
+  protected void containsKeyReturnsFalseIfKeyWasRemoved() {
+    long key = nextLong();
+    long value = nextLong();
     map.put(key, value);
     map.remove(key);
 
@@ -62,16 +57,16 @@ abstract class AbstractLongLongMapTest {
   }
 
   @Test
-  void mapIsEmptyWhenNothingWasInserted() {
+  protected void mapIsEmptyWhenNothingWasInserted() {
     final boolean empty = map.isEmpty();
 
     assertTrue(empty);
   }
 
   @Test
-  void mapIsEmptyWhenAllKeysAreDeleted() {
-    int entryCount = (Math.abs(random.nextInt()) % 100) + 1;
-    long value = random.nextLong();
+  protected void mapIsEmptyWhenAllKeysAreDeleted() {
+    int entryCount = (Math.abs(nextInt()) % 100) + 1;
+    long value = nextLong();
 
     for (long key = 1; key <= entryCount; key++) {
       map.put(key, value);
@@ -86,9 +81,9 @@ abstract class AbstractLongLongMapTest {
   }
 
   @Test
-  void sizeIsCorrect() {
-    int entries = (Math.abs(random.nextInt()) % 50) + 1;
-    long value = random.nextLong();
+  protected void sizeIsCorrect() {
+    int entries = (Math.abs(nextInt()) % 50) + 1;
+    long value = nextLong();
 
     for (long key = 1; key <= entries; key++) {
       map.put(key, value);
@@ -100,9 +95,9 @@ abstract class AbstractLongLongMapTest {
   }
 
   @Test
-  void gettingExistingValueReturnsCorrectValue() {
-    long key = random.nextLong();
-    long value = random.nextLong();
+  protected void gettingExistingValueReturnsCorrectValue() {
+    long key = nextLong();
+    long value = nextLong();
     map.put(key, value);
     final long returnedValue = map.get(key);
 
@@ -110,25 +105,25 @@ abstract class AbstractLongLongMapTest {
   }
 
   @Test
-  void gettingNonExistingValueReturnsCorrectValue() {
-    long key = random.nextLong();
+  protected void gettingNonExistingValueReturnsCorrectValue() {
+    long key = nextLong();
     final long returnedValue = map.get(key);
 
     assertEquals(defaultValue, returnedValue);
   }
 
   @Test
-  void removingNonExistingKeyReturnsDefaultValue() {
-    long key = random.nextLong();
+  protected void removingNonExistingKeyReturnsDefaultValue() {
+    long key = nextLong();
     final long removedValue = map.remove(key);
 
     assertEquals(FASTUTIL_DEFAULT_VALUE, removedValue);
   }
 
   @Test
-  void removingExistingKeyReturnsPreviousValue() {
-    long key = random.nextLong();
-    long value = random.nextLong();
+  protected void removingExistingKeyReturnsPreviousValue() {
+    long key = nextLong();
+    long value = nextLong();
     map.put(key, value);
     final long removedValue = map.remove(key);
 
@@ -136,18 +131,18 @@ abstract class AbstractLongLongMapTest {
   }
 
   @Test
-  void removingWithValueWhenKeyDoesNotExistReturnsFalse() {
-    long key = random.nextLong();
-    long value = random.nextLong();
+  protected void removingWithValueWhenKeyDoesNotExistReturnsFalse() {
+    long key = nextLong();
+    long value = nextLong();
     final boolean result = map.remove(key, value);
 
     assertFalse(result);
   }
 
   @Test
-  void removingWithValueWhenValueIsDifferentReturnsFalse() {
-    long key = random.nextLong();
-    long value = random.nextLong();
+  protected void removingWithValueWhenValueIsDifferentReturnsFalse() {
+    long key = nextLong();
+    long value = nextLong();
     map.put(key, value);
     final boolean result = map.remove(key, value - 1);
 
@@ -155,9 +150,9 @@ abstract class AbstractLongLongMapTest {
   }
 
   @Test
-  void removingWithValueWhenValueIsSameReturnsTrue() {
-    long key = random.nextLong();
-    long value = random.nextLong();
+  protected void removingWithValueWhenValueIsSameReturnsTrue() {
+    long key = nextLong();
+    long value = nextLong();
     map.put(key, value);
     final boolean result = map.remove(key, value);
 
@@ -165,9 +160,9 @@ abstract class AbstractLongLongMapTest {
   }
 
   @Test
-  void puttingValueIfAbsentReturnsSameValue() {
-    long key = random.nextLong();
-    long value = random.nextLong();
+  protected void puttingValueIfAbsentReturnsSameValue() {
+    long key = nextLong();
+    long value = nextLong();
     map.computeIfAbsent(key, l -> value);
 
     long result = map.get(key);
@@ -176,22 +171,22 @@ abstract class AbstractLongLongMapTest {
   }
 
   @Test
-  void checkingValueIfNotAbsentReturnsSameValue() {
-    long key = random.nextLong();
-    long value = random.nextLong();
+  protected void checkingValueIfNotAbsentReturnsSameValue() {
+    long key = nextLong();
+    long value = nextLong();
     map.put(key, value);
     long returned = map.computeIfAbsent(key, l -> value);
 
     long result = map.get(key);
 
     assertEquals(result, value);
-    assertEquals(returned, returned);
+    assertEquals(value, returned);
   }
 
   @Test
-  void replacingValueIfPresentReturnsNewValue() {
-    long key = random.nextLong();
-    long value = random.nextLong();
+  protected void replacingValueIfPresentReturnsNewValue() {
+    long key = nextLong();
+    long value = nextLong();
     map.put(key, value);
 
     map.computeIfPresent(key, Long::sum); // key + old value
@@ -202,8 +197,8 @@ abstract class AbstractLongLongMapTest {
   }
 
   @Test
-  void checkingValueIfNotPresentReturnsDefaultValue() {
-    long key = random.nextLong();
+  protected void checkingValueIfNotPresentReturnsDefaultValue() {
+    long key = nextLong();
     map.computeIfPresent(key, Long::sum);
 
     long result = map.get(key);
