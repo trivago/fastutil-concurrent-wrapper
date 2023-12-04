@@ -32,7 +32,7 @@ _Note_: currently the lib contains wrappers not for every primitive map. Feel fr
 <dependency>
     <groupId>com.trivago</groupId>
     <artifactId>fastutil-concurrent-wrapper</artifactId>
-    <version>0.3.1</version>
+    <version>0.2.2</version>
 </dependency>
 ```
 
