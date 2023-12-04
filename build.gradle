@@ -16,7 +16,7 @@ allprojects {
 }
 
 group 'com.trivago'
-version '0.2.2'
+version '0.3.1'
 
 mavenPublishing {
     pom {
