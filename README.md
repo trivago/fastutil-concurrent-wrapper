@@ -39,7 +39,7 @@ _Note_: currently the lib contains wrappers not for every primitive map. Feel fr
 #### Gradle
 
 ```groovy
-implementation group: 'com.trivago', name: 'fastutil-concurrent-wrapper', version: '0.3.1'
+implementation group: 'com.trivago', name: 'fastutil-concurrent-wrapper', version: '0.2.2'
 ```
 
 ## Usage
