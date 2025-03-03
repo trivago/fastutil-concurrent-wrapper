@@ -1,4 +1,4 @@
-package com.trivago.fastutilconcurrentwrapper;
+package com.trivago.fastutilconcurrentwrapper.primitivekeys;
 
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
 

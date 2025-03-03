@@ -1,8 +1,8 @@
 package com.trivago.kangaroo.long2long;
 
-import com.trivago.fastutilconcurrentwrapper.ConcurrentLongLongMapBuilder;
+import com.trivago.fastutilconcurrentwrapper.primitivekeys.ConcurrentLongLongMapBuilder;
 import com.trivago.fastutilconcurrentwrapper.ConcurrentMapBuilder;
-import com.trivago.fastutilconcurrentwrapper.LongLongMap;
+import com.trivago.fastutilconcurrentwrapper.primitivekeys.LongLongMap;
 import com.trivago.kangaroo.AbstractCommonBenchHelper;
 
 import java.util.concurrent.ThreadLocalRandom;

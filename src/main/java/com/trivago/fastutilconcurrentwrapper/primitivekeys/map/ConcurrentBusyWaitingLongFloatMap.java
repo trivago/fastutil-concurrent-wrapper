@@ -1,28 +1,26 @@
-package com.trivago.fastutilconcurrentwrapper.map;
+package com.trivago.fastutilconcurrentwrapper.primitivekeys.map;
 
-import com.trivago.fastutilconcurrentwrapper.LongLongMap;
-import com.trivago.fastutilconcurrentwrapper.wrapper.PrimitiveFastutilLongLongWrapper;
-import it.unimi.dsi.fastutil.longs.Long2LongFunction;
+import com.trivago.fastutilconcurrentwrapper.primitivekeys.LongFloatMap;
+import com.trivago.fastutilconcurrentwrapper.primitivekeys.wrapper.PrimitiveFastutilLongFloatWrapper;
+import it.unimi.dsi.fastutil.longs.Long2FloatFunction;
 
 import java.util.concurrent.locks.Lock;
 import java.util.function.BiFunction;
 
-public class ConcurrentBusyWaitingLongLongMap extends PrimitiveConcurrentMap implements LongLongMap {
+public class ConcurrentBusyWaitingLongFloatMap extends PrimitiveConcurrentMap implements LongFloatMap {
 
-    private final LongLongMap[] maps;
-    private final long defaultValue;
+    private final LongFloatMap[] maps;
+    private final float defaultValue;
 
-    public ConcurrentBusyWaitingLongLongMap(int numBuckets,
-                                            int initialCapacity,
-                                            float loadFactor,
-                                            long defaultValue) {
+    public ConcurrentBusyWaitingLongFloatMap(int numBuckets,
+                                             int initialCapacity,
+                                             float loadFactor,
+                                             float defaultValue) {
         super(numBuckets);
-
-        this.maps = new LongLongMap[numBuckets];
         this.defaultValue = defaultValue;
-
+        this.maps = new LongFloatMap[numBuckets];
         for (int i = 0; i < numBuckets; i++) {
-            maps[i] = new PrimitiveFastutilLongLongWrapper(initialCapacity, loadFactor, defaultValue);
+            maps[i] = new PrimitiveFastutilLongFloatWrapper(initialCapacity, loadFactor, defaultValue);
         }
     }
 
@@ -54,7 +52,7 @@ public class ConcurrentBusyWaitingLongLongMap extends PrimitiveConcurrentMap imp
     }
 
     @Override
-    public long get(long key) {
+    public float get(long key) {
         int bucket = getBucket(key);
 
         Lock readLock = locks[bucket].readLock();
@@ -71,7 +69,7 @@ public class ConcurrentBusyWaitingLongLongMap extends PrimitiveConcurrentMap imp
     }
 
     @Override
-    public long put(long key, long value) {
+    public float put(long key, float value) {
         int bucket = getBucket(key);
 
         Lock writeLock = locks[bucket].writeLock();
@@ -88,12 +86,12 @@ public class ConcurrentBusyWaitingLongLongMap extends PrimitiveConcurrentMap imp
     }
 
     @Override
-    public long getDefaultValue() {
+    public float getDefaultValue() {
         return defaultValue;
     }
 
     @Override
-    public long remove(long key) {
+    public float remove(long key) {
         int bucket = getBucket(key);
 
         Lock writeLock = locks[bucket].writeLock();
@@ -110,7 +108,7 @@ public class ConcurrentBusyWaitingLongLongMap extends PrimitiveConcurrentMap imp
     }
 
     @Override
-    public boolean remove(long key, long value) {
+    public boolean remove(long key, float value) {
         int bucket = getBucket(key);
 
         Lock writeLock = locks[bucket].writeLock();
@@ -127,7 +125,7 @@ public class ConcurrentBusyWaitingLongLongMap extends PrimitiveConcurrentMap imp
     }
 
     @Override
-    public long computeIfAbsent(long key, Long2LongFunction mappingFunction) {
+    public float computeIfAbsent(long key, Long2FloatFunction mappingFunction) {
         int bucket = getBucket(key);
 
         Lock writeLock = locks[bucket].writeLock();
@@ -144,7 +142,7 @@ public class ConcurrentBusyWaitingLongLongMap extends PrimitiveConcurrentMap imp
     }
 
     @Override
-    public long computeIfPresent(long key, BiFunction<Long, Long, Long> mappingFunction) {
+    public float computeIfPresent(int key, BiFunction<Long, Float, Float> mappingFunction) {
         int bucket = getBucket(key);
 
         Lock writeLock = locks[bucket].writeLock();

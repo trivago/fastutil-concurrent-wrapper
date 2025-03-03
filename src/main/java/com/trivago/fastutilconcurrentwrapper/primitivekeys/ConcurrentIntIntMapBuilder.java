@@ -1,7 +1,8 @@
-package com.trivago.fastutilconcurrentwrapper;
+package com.trivago.fastutilconcurrentwrapper.primitivekeys;
 
-import com.trivago.fastutilconcurrentwrapper.map.ConcurrentBusyWaitingIntIntMap;
-import com.trivago.fastutilconcurrentwrapper.map.ConcurrentIntIntMap;
+import com.trivago.fastutilconcurrentwrapper.ConcurrentMapBuilder;
+import com.trivago.fastutilconcurrentwrapper.primitivekeys.map.ConcurrentBusyWaitingIntIntMap;
+import com.trivago.fastutilconcurrentwrapper.primitivekeys.map.ConcurrentIntIntMap;
 
 public final class ConcurrentIntIntMapBuilder extends ConcurrentMapBuilder<ConcurrentIntIntMapBuilder, IntIntMap> {
 

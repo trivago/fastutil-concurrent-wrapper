@@ -1,7 +1,8 @@
-package com.trivago.fastutilconcurrentwrapper;
+package com.trivago.fastutilconcurrentwrapper.primitivekeys;
 
-import com.trivago.fastutilconcurrentwrapper.map.ConcurrentBusyWaitingLongLongMap;
-import com.trivago.fastutilconcurrentwrapper.map.ConcurrentLongLongMap;
+import com.trivago.fastutilconcurrentwrapper.ConcurrentMapBuilder;
+import com.trivago.fastutilconcurrentwrapper.primitivekeys.map.ConcurrentBusyWaitingLongLongMap;
+import com.trivago.fastutilconcurrentwrapper.primitivekeys.map.ConcurrentLongLongMap;
 
 public final class ConcurrentLongLongMapBuilder
         extends ConcurrentMapBuilder<ConcurrentLongLongMapBuilder, LongLongMap> {

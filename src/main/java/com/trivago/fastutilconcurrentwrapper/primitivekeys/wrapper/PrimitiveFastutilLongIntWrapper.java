@@ -1,11 +1,8 @@
-package com.trivago.fastutilconcurrentwrapper.wrapper;
+package com.trivago.fastutilconcurrentwrapper.primitivekeys.wrapper;
 
-import com.trivago.fastutilconcurrentwrapper.LongIntMap;
-import com.trivago.fastutilconcurrentwrapper.LongLongMap;
+import com.trivago.fastutilconcurrentwrapper.primitivekeys.LongIntMap;
 import it.unimi.dsi.fastutil.longs.Long2IntFunction;
 import it.unimi.dsi.fastutil.longs.Long2IntOpenHashMap;
-import it.unimi.dsi.fastutil.longs.Long2LongFunction;
-import it.unimi.dsi.fastutil.longs.Long2LongOpenHashMap;
 
 import java.util.function.BiFunction;
 

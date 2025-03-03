@@ -1,9 +1,7 @@
 package com.trivago.fastutilconcurrentwrapper;
 
 @SuppressWarnings("unchecked")
-public abstract class ConcurrentMapBuilder<
-        B extends ConcurrentMapBuilder<B, K>,
-        K extends KeyMap> {
+public abstract class ConcurrentMapBuilder<B extends ConcurrentMapBuilder<B, K>, K extends KeyMap> {
 
     protected MapMode mapMode;
     protected int buckets = 8;

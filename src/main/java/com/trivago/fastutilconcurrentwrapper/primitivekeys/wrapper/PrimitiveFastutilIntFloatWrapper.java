@@ -1,6 +1,6 @@
-package com.trivago.fastutilconcurrentwrapper.wrapper;
+package com.trivago.fastutilconcurrentwrapper.primitivekeys.wrapper;
 
-import com.trivago.fastutilconcurrentwrapper.IntFloatMap;
+import com.trivago.fastutilconcurrentwrapper.primitivekeys.IntFloatMap;
 import it.unimi.dsi.fastutil.ints.Int2FloatFunction;
 import it.unimi.dsi.fastutil.ints.Int2FloatOpenHashMap;
 

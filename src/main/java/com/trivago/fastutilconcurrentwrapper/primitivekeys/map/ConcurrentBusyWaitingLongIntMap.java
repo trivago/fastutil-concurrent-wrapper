@@ -1,26 +1,28 @@
-package com.trivago.fastutilconcurrentwrapper.map;
+package com.trivago.fastutilconcurrentwrapper.primitivekeys.map;
 
-import com.trivago.fastutilconcurrentwrapper.LongFloatMap;
-import com.trivago.fastutilconcurrentwrapper.wrapper.PrimitiveFastutilLongFloatWrapper;
-import it.unimi.dsi.fastutil.longs.Long2FloatFunction;
+import com.trivago.fastutilconcurrentwrapper.primitivekeys.LongIntMap;
+import com.trivago.fastutilconcurrentwrapper.primitivekeys.wrapper.PrimitiveFastutilLongIntWrapper;
+import it.unimi.dsi.fastutil.longs.Long2IntFunction;
 
 import java.util.concurrent.locks.Lock;
 import java.util.function.BiFunction;
 
-public class ConcurrentBusyWaitingLongFloatMap extends PrimitiveConcurrentMap implements LongFloatMap {
+public class ConcurrentBusyWaitingLongIntMap extends PrimitiveConcurrentMap implements LongIntMap {
 
-    private final LongFloatMap[] maps;
-    private final float defaultValue;
+    private final LongIntMap[] maps;
+    private final int defaultValue;
 
-    public ConcurrentBusyWaitingLongFloatMap(int numBuckets,
-                                             int initialCapacity,
-                                             float loadFactor,
-                                             float defaultValue) {
+    public ConcurrentBusyWaitingLongIntMap(int numBuckets,
+                                           int initialCapacity,
+                                           float loadFactor,
+                                           int defaultValue) {
         super(numBuckets);
+
+        this.maps = new LongIntMap[numBuckets];
         this.defaultValue = defaultValue;
-        this.maps = new LongFloatMap[numBuckets];
+
         for (int i = 0; i < numBuckets; i++) {
-            maps[i] = new PrimitiveFastutilLongFloatWrapper(initialCapacity, loadFactor, defaultValue);
+            maps[i] = new PrimitiveFastutilLongIntWrapper(initialCapacity, loadFactor, defaultValue);
         }
     }
 
@@ -52,7 +54,7 @@ public class ConcurrentBusyWaitingLongFloatMap extends PrimitiveConcurrentMap im
     }
 
     @Override
-    public float get(long key) {
+    public int get(long key) {
         int bucket = getBucket(key);
 
         Lock readLock = locks[bucket].readLock();
@@ -69,7 +71,7 @@ public class ConcurrentBusyWaitingLongFloatMap extends PrimitiveConcurrentMap im
     }
 
     @Override
-    public float put(long key, float value) {
+    public int put(long key, int value) {
         int bucket = getBucket(key);
 
         Lock writeLock = locks[bucket].writeLock();
@@ -86,12 +88,12 @@ public class ConcurrentBusyWaitingLongFloatMap extends PrimitiveConcurrentMap im
     }
 
     @Override
-    public float getDefaultValue() {
+    public int getDefaultValue() {
         return defaultValue;
     }
 
     @Override
-    public float remove(long key) {
+    public int remove(long key) {
         int bucket = getBucket(key);
 
         Lock writeLock = locks[bucket].writeLock();
@@ -108,7 +110,7 @@ public class ConcurrentBusyWaitingLongFloatMap extends PrimitiveConcurrentMap im
     }
 
     @Override
-    public boolean remove(long key, float value) {
+    public boolean remove(long key, int value) {
         int bucket = getBucket(key);
 
         Lock writeLock = locks[bucket].writeLock();
@@ -125,7 +127,7 @@ public class ConcurrentBusyWaitingLongFloatMap extends PrimitiveConcurrentMap im
     }
 
     @Override
-    public float computeIfAbsent(long key, Long2FloatFunction mappingFunction) {
+    public int computeIfAbsent(long key, Long2IntFunction mappingFunction) {
         int bucket = getBucket(key);
 
         Lock writeLock = locks[bucket].writeLock();
@@ -142,7 +144,7 @@ public class ConcurrentBusyWaitingLongFloatMap extends PrimitiveConcurrentMap im
     }
 
     @Override
-    public float computeIfPresent(int key, BiFunction<Long, Float, Float> mappingFunction) {
+    public int computeIfPresent(long key, BiFunction<Long, Integer, Integer> mappingFunction) {
         int bucket = getBucket(key);
 
         Lock writeLock = locks[bucket].writeLock();

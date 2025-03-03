@@ -1,7 +1,7 @@
-package com.trivago.fastutilconcurrentwrapper.map;
+package com.trivago.fastutilconcurrentwrapper.primitivekeys.map;
 
-import com.trivago.fastutilconcurrentwrapper.LongFloatMap;
-import com.trivago.fastutilconcurrentwrapper.wrapper.PrimitiveFastutilLongFloatWrapper;
+import com.trivago.fastutilconcurrentwrapper.primitivekeys.LongFloatMap;
+import com.trivago.fastutilconcurrentwrapper.primitivekeys.wrapper.PrimitiveFastutilLongFloatWrapper;
 import it.unimi.dsi.fastutil.longs.Long2FloatFunction;
 
 import java.util.concurrent.locks.Lock;

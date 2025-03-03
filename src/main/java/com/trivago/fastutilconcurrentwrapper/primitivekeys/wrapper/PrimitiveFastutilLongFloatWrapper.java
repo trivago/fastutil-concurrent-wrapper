@@ -1,6 +1,6 @@
-package com.trivago.fastutilconcurrentwrapper.wrapper;
+package com.trivago.fastutilconcurrentwrapper.primitivekeys.wrapper;
 
-import com.trivago.fastutilconcurrentwrapper.LongFloatMap;
+import com.trivago.fastutilconcurrentwrapper.primitivekeys.LongFloatMap;
 import it.unimi.dsi.fastutil.longs.Long2FloatFunction;
 import it.unimi.dsi.fastutil.longs.Long2FloatOpenHashMap;
 

@@ -1,28 +1,30 @@
-package com.trivago.fastutilconcurrentwrapper.map;
+package com.trivago.fastutilconcurrentwrapper.primitivekeys.map;
 
-import com.trivago.fastutilconcurrentwrapper.LongLongMap;
-import com.trivago.fastutilconcurrentwrapper.wrapper.PrimitiveFastutilLongLongWrapper;
-import it.unimi.dsi.fastutil.longs.Long2LongFunction;
+import com.trivago.fastutilconcurrentwrapper.primitivekeys.LongIntMap;
+import com.trivago.fastutilconcurrentwrapper.primitivekeys.wrapper.PrimitiveFastutilLongIntWrapper;
+import it.unimi.dsi.fastutil.longs.Long2IntFunction;
 
 import java.util.concurrent.locks.Lock;
 import java.util.function.BiFunction;
 
-public class ConcurrentLongLongMap extends PrimitiveConcurrentMap implements LongLongMap {
+public class ConcurrentLongIntMap extends PrimitiveConcurrentMap implements LongIntMap {
 
-    private final LongLongMap[] maps;
-    private final long defaultValue;
+    private final LongIntMap[] maps;
+    private final int defaultValue;
 
-    public ConcurrentLongLongMap(int numBuckets,
-                                 int initialCapacity,
-                                 float loadFactor,
-                                 long defaultValue) {
+    public ConcurrentLongIntMap(
+            int numBuckets,
+            int initialCapacity,
+            float loadFactor,
+            int defaultValue) {
+
         super(numBuckets);
 
-        this.maps = new LongLongMap[numBuckets];
+        this.maps = new LongIntMap[numBuckets];
         this.defaultValue = defaultValue;
 
         for (int i = 0; i < numBuckets; i++) {
-            maps[i] = new PrimitiveFastutilLongLongWrapper(initialCapacity, loadFactor, defaultValue);
+            maps[i] = new PrimitiveFastutilLongIntWrapper(initialCapacity, loadFactor, defaultValue);
         }
     }
 
@@ -50,10 +52,10 @@ public class ConcurrentLongLongMap extends PrimitiveConcurrentMap implements Lon
     }
 
     @Override
-    public long get(long l) {
+    public int get(long l) {
         int bucket = getBucket(l);
 
-        long result;
+        int result;
 
         Lock readLock = locks[bucket].readLock();
         readLock.lock();
@@ -67,10 +69,10 @@ public class ConcurrentLongLongMap extends PrimitiveConcurrentMap implements Lon
     }
 
     @Override
-    public long put(long key, long value) {
+    public int put(long key, int value) {
         int bucket = getBucket(key);
 
-        long result;
+        int result;
 
         Lock writeLock = locks[bucket].writeLock();
         writeLock.lock();
@@ -84,12 +86,12 @@ public class ConcurrentLongLongMap extends PrimitiveConcurrentMap implements Lon
     }
 
     @Override
-    public long getDefaultValue() {
+    public int getDefaultValue() {
         return defaultValue;
     }
 
     @Override
-    public long remove(long key) {
+    public int remove(long key) {
         int bucket = getBucket(key);
 
         Lock writeLock = locks[bucket].writeLock();
@@ -102,7 +104,7 @@ public class ConcurrentLongLongMap extends PrimitiveConcurrentMap implements Lon
     }
 
     @Override
-    public boolean remove(long key, long value) {
+    public boolean remove(long key, int value) {
         int bucket = getBucket(key);
 
         Lock writeLock = locks[bucket].writeLock();
@@ -115,7 +117,7 @@ public class ConcurrentLongLongMap extends PrimitiveConcurrentMap implements Lon
     }
 
     @Override
-    public long computeIfAbsent(long key, Long2LongFunction mappingFunction) {
+    public int computeIfAbsent(long key, Long2IntFunction mappingFunction) {
         int bucket = getBucket(key);
 
         Lock writeLock = locks[bucket].writeLock();
@@ -128,7 +130,7 @@ public class ConcurrentLongLongMap extends PrimitiveConcurrentMap implements Lon
     }
 
     @Override
-    public long computeIfPresent(long key, BiFunction<Long, Long, Long> mappingFunction) {
+    public int computeIfPresent(long key, BiFunction<Long, Integer, Integer> mappingFunction) {
         int bucket = getBucket(key);
 
         Lock writeLock = locks[bucket].writeLock();

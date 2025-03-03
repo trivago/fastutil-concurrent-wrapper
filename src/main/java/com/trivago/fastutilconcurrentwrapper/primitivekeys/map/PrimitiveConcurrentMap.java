@@ -1,4 +1,4 @@
-package com.trivago.fastutilconcurrentwrapper.map;
+package com.trivago.fastutilconcurrentwrapper.primitivekeys.map;
 
 import com.trivago.fastutilconcurrentwrapper.KeyMap;
 

@@ -1,7 +1,7 @@
 package com.trivago.fastutilconcurrentwrapper.longlong;
 
-import com.trivago.fastutilconcurrentwrapper.LongLongMap;
-import com.trivago.fastutilconcurrentwrapper.wrapper.PrimitiveFastutilLongLongWrapper;
+import com.trivago.fastutilconcurrentwrapper.primitivekeys.LongLongMap;
+import com.trivago.fastutilconcurrentwrapper.primitivekeys.wrapper.PrimitiveFastutilLongLongWrapper;
 
 public class PrimitiveFastutilLongLongWrapperTest extends AbstractLongLongMapTest {
 

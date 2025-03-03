@@ -1,7 +1,7 @@
 package com.trivago.fastutilconcurrentwrapper.longint;
 
-import com.trivago.fastutilconcurrentwrapper.LongIntMap;
-import com.trivago.fastutilconcurrentwrapper.wrapper.PrimitiveFastutilLongIntWrapper;
+import com.trivago.fastutilconcurrentwrapper.primitivekeys.LongIntMap;
+import com.trivago.fastutilconcurrentwrapper.primitivekeys.wrapper.PrimitiveFastutilLongIntWrapper;
 
 public class PrimitiveFastutilLongIntWrapperTest extends AbstractLongIntMapTest {
 
