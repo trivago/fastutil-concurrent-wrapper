@@ -1,4 +1,4 @@
-package com.trivago.fastutilconcurrentwrapper.map;
+package com.trivago.fastutilconcurrentwrapper.objectkeys.map;
 
 import com.trivago.fastutilconcurrentwrapper.KeyMap;
 
@@ -6,12 +6,12 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public abstract class PrimitiveConcurrentMap {
+public abstract class ObjectConcurrentMap<K> {
 
     protected final int numBuckets;
     protected final ReadWriteLock[] locks;
 
-    protected PrimitiveConcurrentMap(int numBuckets) {
+    protected ObjectConcurrentMap(int numBuckets) {
         this.numBuckets = numBuckets;
         this.locks = new ReadWriteLock[numBuckets];
         for (int i = 0; i < numBuckets; i++) {
@@ -56,14 +56,8 @@ public abstract class PrimitiveConcurrentMap {
         }
     }
 
-    protected int getBucket(long key) {
-        int hash = Long.hashCode(key);
-        return getBucketCheckMinValue(hash);
-    }
-
-    protected int getBucket(int key) {
-        int hash = Integer.hashCode(key);
-        return getBucketCheckMinValue(hash);
+    protected int getBucket(K key) {
+        return getBucketCheckMinValue(key.hashCode());
     }
 
     private int getBucketCheckMinValue(int hash) {

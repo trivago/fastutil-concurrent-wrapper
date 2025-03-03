@@ -1,6 +1,6 @@
 package com.trivago.fastutilconcurrentwrapper;
 
-public interface PrimitiveKeyMap {
+public interface KeyMap {
     int size();
 
     boolean isEmpty();

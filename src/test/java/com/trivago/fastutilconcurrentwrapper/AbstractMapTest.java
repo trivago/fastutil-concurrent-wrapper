@@ -17,6 +17,10 @@ public abstract class AbstractMapTest {
         return ThreadLocalRandom.current().nextInt();
     }
 
+    protected static ObjectKey nextObject() {
+        return new ObjectKey();
+    }
+
     @Test
     protected abstract void containsKeyReturnsFalseIfMapIsEmpty();
 
@@ -67,4 +71,15 @@ public abstract class AbstractMapTest {
 
     @Test
     protected abstract void checkingValueIfNotPresentReturnsDefaultValue();
+
+    public static class ObjectKey {
+
+        private final int number = nextInt();
+
+        @Override
+        public int hashCode() {
+            return Integer.hashCode(number);
+        }
+
+    }
 }
