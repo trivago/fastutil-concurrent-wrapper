@@ -55,8 +55,8 @@ mavenPublishing {
     }
 }
 
-sourceCompatibility = 11
-targetCompatibility = 11
+sourceCompatibility = 14
+targetCompatibility = 14
 
 sourceSets {
     jmh {
