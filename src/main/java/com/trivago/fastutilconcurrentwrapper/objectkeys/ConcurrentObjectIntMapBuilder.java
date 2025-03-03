@@ -21,6 +21,7 @@ public final class ConcurrentObjectIntMapBuilder<K> extends ConcurrentMapBuilder
         return this;
     }
 
+    @Override
     public ObjectIntMap<K> build() {
         return switch (mapMode) {
             case BUSY_WAITING -> new ConcurrentBusyWaitingObjectIntMap<>(

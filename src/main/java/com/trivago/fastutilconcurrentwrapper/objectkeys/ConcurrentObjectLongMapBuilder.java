@@ -21,6 +21,7 @@ public final class ConcurrentObjectLongMapBuilder<K> extends ConcurrentMapBuilde
         return this;
     }
 
+    @Override
     public ObjectLongMap<K> build() {
         return switch (mapMode) {
             case BUSY_WAITING -> new ConcurrentBusyWaitingObjectLongMap<>(

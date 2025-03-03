@@ -3,39 +3,16 @@ package com.trivago.fastutilconcurrentwrapper;
 import com.trivago.fastutilconcurrentwrapper.map.ConcurrentBusyWaitingLongLongMap;
 import com.trivago.fastutilconcurrentwrapper.map.ConcurrentLongLongMap;
 
-public final class ConcurrentLongLongMapBuilder {
-    private MapMode mapMode = MapMode.BLOCKING;
-    private int buckets = 8;
-    private int initialCapacity = 100_000;
-    private float loadFactor = 0.8f;
+public final class ConcurrentLongLongMapBuilder
+        extends ConcurrentMapBuilder<ConcurrentLongLongMapBuilder, LongLongMap> {
+
     private long defaultValue = LongLongMap.DEFAULT_VALUE;
 
     private ConcurrentLongLongMapBuilder() {
-
     }
 
     public static ConcurrentLongLongMapBuilder newBuilder() {
         return new ConcurrentLongLongMapBuilder();
-    }
-
-    public ConcurrentLongLongMapBuilder withBuckets(int buckets) {
-        this.buckets = buckets;
-        return this;
-    }
-
-    public ConcurrentLongLongMapBuilder withInitialCapacity(int initialCapacity) {
-        this.initialCapacity = initialCapacity;
-        return this;
-    }
-
-    public ConcurrentLongLongMapBuilder withLoadFactor(float loadFactor) {
-        this.loadFactor = loadFactor;
-        return this;
-    }
-
-    public ConcurrentLongLongMapBuilder withMode(MapMode mapMode) {
-        this.mapMode = mapMode;
-        return this;
     }
 
     public ConcurrentLongLongMapBuilder withDefaultValue(long defaultValue) {
@@ -43,32 +20,21 @@ public final class ConcurrentLongLongMapBuilder {
         return this;
     }
 
+    @Override
     public LongLongMap build() {
-        return mapMode.createMap(this);
-    }
-
-    public enum MapMode {
-        BUSY_WAITING {
-            @Override
-            LongLongMap createMap(ConcurrentLongLongMapBuilder builder) {
-                return new ConcurrentBusyWaitingLongLongMap(
-                        builder.buckets,
-                        builder.initialCapacity,
-                        builder.loadFactor,
-                        builder.defaultValue);
-            }
-        },
-        BLOCKING {
-            @Override
-            LongLongMap createMap(ConcurrentLongLongMapBuilder builder) {
-                return new ConcurrentLongLongMap(
-                        builder.buckets,
-                        builder.initialCapacity,
-                        builder.loadFactor,
-                        builder.defaultValue);
-            }
+        return switch (mapMode) {
+            case BUSY_WAITING -> new ConcurrentBusyWaitingLongLongMap(
+                    this.buckets,
+                    this.initialCapacity,
+                    this.loadFactor,
+                    this.defaultValue
+            );
+            case BLOCKING -> new ConcurrentLongLongMap(
+                    this.buckets,
+                    this.initialCapacity,
+                    this.loadFactor,
+                    this.defaultValue
+            );
         };
-
-        abstract LongLongMap createMap(ConcurrentLongLongMapBuilder builder);
     }
 }

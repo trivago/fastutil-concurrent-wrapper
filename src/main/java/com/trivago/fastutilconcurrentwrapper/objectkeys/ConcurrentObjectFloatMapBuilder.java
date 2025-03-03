@@ -21,6 +21,7 @@ public final class ConcurrentObjectFloatMapBuilder<K> extends ConcurrentMapBuild
         return this;
     }
 
+    @Override
     public ObjectFloatMap<K> build() {
         return switch (mapMode) {
             case BUSY_WAITING -> new ConcurrentBusyWaitingObjectFloatMap<>(

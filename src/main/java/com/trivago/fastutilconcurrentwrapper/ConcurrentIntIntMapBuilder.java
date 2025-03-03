@@ -3,13 +3,9 @@ package com.trivago.fastutilconcurrentwrapper;
 import com.trivago.fastutilconcurrentwrapper.map.ConcurrentBusyWaitingIntIntMap;
 import com.trivago.fastutilconcurrentwrapper.map.ConcurrentIntIntMap;
 
-public final class ConcurrentIntIntMapBuilder {
+public final class ConcurrentIntIntMapBuilder extends ConcurrentMapBuilder<ConcurrentIntIntMapBuilder, IntIntMap> {
 
-    private MapMode mapMode = MapMode.BLOCKING;
-    private int buckets = 8;
     private int defaultValue = 0;
-    private int initialCapacity = 100_000;
-    private float loadFactor = 0.8f;
 
     private ConcurrentIntIntMapBuilder() {
     }
@@ -18,57 +14,26 @@ public final class ConcurrentIntIntMapBuilder {
         return new ConcurrentIntIntMapBuilder();
     }
 
-    public ConcurrentIntIntMapBuilder withBuckets(int buckets) {
-        this.buckets = buckets;
-        return this;
-    }
-
     public ConcurrentIntIntMapBuilder withDefaultValue(int defaultValue) {
         this.defaultValue = defaultValue;
         return this;
     }
 
-    public ConcurrentIntIntMapBuilder withInitialCapacity(int initialCapacity) {
-        this.initialCapacity = initialCapacity;
-        return this;
-    }
-
-    public ConcurrentIntIntMapBuilder withLoadFactor(float loadFactor) {
-        this.loadFactor = loadFactor;
-        return this;
-    }
-
-    public ConcurrentIntIntMapBuilder withMode(MapMode mapMode) {
-        this.mapMode = mapMode;
-        return this;
-    }
-
+    @Override
     public IntIntMap build() {
-        return mapMode.createMap(this);
-    }
-
-    public enum MapMode {
-        BLOCKING {
-            @Override
-            IntIntMap createMap(ConcurrentIntIntMapBuilder builder) {
-                return new ConcurrentIntIntMap(
-                        builder.buckets,
-                        builder.initialCapacity,
-                        builder.loadFactor,
-                        builder.defaultValue);
-            }
-        },
-        BUSY_WAITING {
-            @Override
-            IntIntMap createMap(ConcurrentIntIntMapBuilder builder) {
-                return new ConcurrentBusyWaitingIntIntMap(
-                        builder.buckets,
-                        builder.initialCapacity,
-                        builder.loadFactor,
-                        builder.defaultValue);
-            }
+        return switch (mapMode) {
+            case BUSY_WAITING -> new ConcurrentBusyWaitingIntIntMap(
+                    this.buckets,
+                    this.initialCapacity,
+                    this.loadFactor,
+                    this.defaultValue
+            );
+            case BLOCKING -> new ConcurrentIntIntMap(
+                    this.buckets,
+                    this.initialCapacity,
+                    this.loadFactor,
+                    this.defaultValue
+            );
         };
-
-        abstract IntIntMap createMap(ConcurrentIntIntMapBuilder builder);
     }
 }
