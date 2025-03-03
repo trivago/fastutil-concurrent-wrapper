@@ -85,48 +85,105 @@ For running JMH tests just execute:
 ./gradlew jmh
 ```
 
-Results for `FastutilWrapper BusyWaiting mode` vs `FastutilWrapper Default mode` vs [java.util wrappers](https://docs.oracle.com/javase/tutorial/collections/implementations/wrapper.html)
+Results for `FastutilWrapper BusyWaiting mode` vs `FastutilWrapper Default mode` vs [java.util wrappers](https://docs.oracle.com/javase/tutorial/collections/implementations/wrapper.html) vs [java.util.concurrent](https://docs.oracle.com/javase/tutorial/collections/implementations/map.html)
+
+#### LongLongMap
 
 Throughput (more is better)
 
 ```shell
-Benchmark                                                        Mode  Cnt         Score         Error  Units
+Benchmark                                                                Mode  Cnt          Score         Error  Units
 
-FastutilWrapperBusyWaitingBenchmark.testRandomAllOpsThroughput  thrpt   15  14517457,055 ?  795637,784  ops/s
-FastutilWrapperBusyWaitingBenchmark.testRandomGetThroughput     thrpt   15  16610181,320 ? 1456776,589  ops/s
-FastutilWrapperBusyWaitingBenchmark.testRandomPutThroughput     thrpt   13  11706178,916 ? 2547333,524  ops/s
+FastutilWrapperBusyWaitingLongLongBenchmark.testRandomAllOpsThroughput  thrpt   15   14890349.957 ± 2041249.822  ops/s
+FastutilWrapperBusyWaitingLongLongBenchmark.testRandomGetThroughput     thrpt   15   25449527.963 ± 2600729.022  ops/s
+FastutilWrapperBusyWaitingLongLongBenchmark.testRandomPutThroughput     thrpt   14   11351650.286 ± 3324513.684  ops/s
 
-FastutilWrapperDefaultBenchmark.testRandomAllOpsThroughput      thrpt   15   7385357,514 ? 1127356,032  ops/s
-FastutilWrapperDefaultBenchmark.testRandomGetThroughput         thrpt   15  16190621,923 ? 1836415,022  ops/s
-FastutilWrapperDefaultBenchmark.testRandomPutThroughput         thrpt   15   8945369,395 ? 1225460,217  ops/s
+FastutilWrapperDefaultLongLongBenchmark.testRandomAllOpsThroughput      thrpt   15    9241548.296 ± 1501812.910  ops/s
+FastutilWrapperDefaultLongLongBenchmark.testRandomGetThroughput         thrpt   15   23205312.991 ± 2243533.089  ops/s
+FastutilWrapperDefaultLongLongBenchmark.testRandomPutThroughput         thrpt   15    8705378.516 ± 2193254.025  ops/s
 
-JavaUtilWrapperBenchmark.testRandomAllOpsThroughput             thrpt   15   4921201,916 ?  410471,239  ops/s
-JavaUtilWrapperBenchmark.testRandomGetThroughput                thrpt   15   7827123,690 ?  557193,670  ops/s
-JavaUtilWrapperBenchmark.testRandomPutThroughput                thrpt   15   4832517,371 ? 1122344,647  ops/s
+JavaUtilWrapperLongLongBenchmark.testRandomAllOpsThroughput             thrpt   15    4807759.211 ±  235212.245  ops/s
+JavaUtilWrapperLongLongBenchmark.testRandomGetThroughput                thrpt   15   10518803.436 ±  343489.210  ops/s
+JavaUtilWrapperLongLongBenchmark.testRandomPutThroughput                thrpt   15    3893033.361 ± 1091839.389  ops/s
+
+JavaConcurrentLongLongBenchmark.testRandomAllOpsThroughput              thrpt   15    8338702.617 ± 2339627.650  ops/s
+JavaConcurrentLongLongBenchmark.testRandomGetThroughput                 thrpt   15  115734084.910 ± 1021773.718  ops/s
+JavaConcurrentLongLongBenchmark.testRandomPutThroughput                 thrpt   15    2120419.422 ± 1616120.572  ops/s
 ```
 AverageTime per ops (less is better)
 
 ```shell
-Benchmark                                                        Mode  Cnt         Score         Error  Units
+Benchmark                                                                Mode  Cnt          Score         Error  Units
 
-FastutilWrapperBusyWaitingBenchmark.testRandomAllOpsAvgTime      avgt   15       268,790 ?      22,526  ns/op
-FastutilWrapperBusyWaitingBenchmark.testRandomGetAvgTime         avgt   15       231,552 ?      16,116  ns/op
-FastutilWrapperBusyWaitingBenchmark.testRandomPutAvgTime         avgt   10       292,246 ?      49,757  ns/op
+FastutilWrapperBusyWaitingLongLongBenchmark.testRandomAllOpsAvgTime      avgt   15        271.732 ±      23.990  ns/op
+FastutilWrapperBusyWaitingLongLongBenchmark.testRandomGetAvgTime         avgt   15        152.339 ±      20.281  ns/op
+FastutilWrapperBusyWaitingLongLongBenchmark.testRandomPutAvgTime         avgt   15        376.696 ±     104.558  ns/op
 
-FastutilWrapperDefaultBenchmark.testRandomAllOpsAvgTime          avgt   15       467,381 ?       9,790  ns/op
-FastutilWrapperDefaultBenchmark.testRandomGetAvgTime             avgt   15       237,683 ?      14,167  ns/op
-FastutilWrapperDefaultBenchmark.testRandomPutAvgTime             avgt   15       427,441 ?      25,116  ns/op
+FastutilWrapperDefaultLongLongBenchmark.testRandomAllOpsAvgTime          avgt   15        450.080 ±      74.515  ns/op
+FastutilWrapperDefaultLongLongBenchmark.testRandomGetAvgTime             avgt   15        158.247 ±      12.916  ns/op
+FastutilWrapperDefaultLongLongBenchmark.testRandomPutAvgTime             avgt   15        480.561 ±     142.326  ns/op
 
-JavaUtilWrapperBenchmark.testRandomAllOpsAvgTime                 avgt   15       781,869 ?     191,081  ns/op
-JavaUtilWrapperBenchmark.testRandomGetAvgTime                    avgt   15       470,869 ?      33,198  ns/op
-JavaUtilWrapperBenchmark.testRandomPutAvgTime                    avgt   15       964,613 ?     422,648  ns/op
+JavaUtilWrapperLongLongBenchmark.testRandomAllOpsAvgTime                 avgt   15        848.636 ±      37.767  ns/op
+JavaUtilWrapperLongLongBenchmark.testRandomGetAvgTime                    avgt   15        380.703 ±      18.391  ns/op
+JavaUtilWrapperLongLongBenchmark.testRandomPutAvgTime                    avgt   15       1083.204 ±     323.376  ns/op
+
+JavaConcurrentLongLongBenchmark.testRandomAllOpsAvgTime                  avgt   15        511.132 ±     166.567  ns/op
+JavaConcurrentLongLongBenchmark.testRandomGetAvgTime                     avgt   15         34.583 ±       0.301  ns/op
+JavaConcurrentLongLongBenchmark.testRandomPutAvgTime                     avgt   15      16723.754 ±   24368.274  ns/op
 ```
+
+#### ObjectLongMap
+
+Throughput (more is better)
+
+```shell
+Benchmark                                                                 Mode  Cnt          Score         Error  Units
+
+FastutilWrapperBusyWaitingObjectLongBenchmark.testRandomAllOpsThroughput thrpt   15   12560651.390 ± 2610919.005  ops/s
+FastutilWrapperBusyWaitingObjectLongBenchmark.testRandomGetThroughput    thrpt   15   26366394.724 ± 2433787.656  ops/s
+FastutilWrapperBusyWaitingObjectLongBenchmark.testRandomPutThroughput    thrpt   15    5633586.398 ± 2592634.909  ops/s
+
+FastutilWrapperDefaultObjectLongBenchmark.testRandomAllOpsThroughput     thrpt   15    8107579.700 ± 1356806.057  ops/s
+FastutilWrapperDefaultObjectLongBenchmark.testRandomGetThroughput        thrpt   15   22899340.190 ± 2745129.956  ops/s
+FastutilWrapperDefaultObjectLongBenchmark.testRandomPutThroughput        thrpt   15    5115575.519 ± 1510259.367  ops/s
+
+JavaUtilWrapperObjectLongBenchmark.testRandomAllOpsThroughput            thrpt   15    5146475.879 ±  876528.313  ops/s
+JavaUtilWrapperObjectLongBenchmark.testRandomGetThroughput               thrpt   15   15354340.310 ±  413172.576  ops/s
+JavaUtilWrapperObjectLongBenchmark.testRandomPutThroughput               thrpt   15    3349970.826 ±  466818.411  ops/s
+
+JavaConcurrentObjectLongBenchmark.testRandomAllOpsThroughput             thrpt   15    9802597.556 ±  845121.891  ops/s
+JavaConcurrentObjectLongBenchmark.testRandomGetThroughput                thrpt   15  144324735.489 ± 3072330.160  ops/s
+JavaConcurrentObjectLongBenchmark.testRandomPutThroughput                thrpt   15    2717410.407 ± 1995361.332  ops/s
+```
+AverageTime per ops (less is better)
+
+```shell
+Benchmark                                                                 Mode  Cnt          Score         Error  Units
+
+FastutilWrapperBusyWaitingObjectLongBenchmark.testRandomAllOpsAvgTime     avgt   15        339.809 ±      80.612  ns/op
+FastutilWrapperBusyWaitingObjectLongBenchmark.testRandomGetAvgTime        avgt   15        193.411 ±      26.775  ns/op
+FastutilWrapperBusyWaitingObjectLongBenchmark.testRandomPutAvgTime        avgt   15        951.206 ±     617.310  ns/op
+
+FastutilWrapperDefaultObjectLongBenchmark.testRandomAllOpsAvgTime         avgt   15        496.373 ±      70.106  ns/op
+FastutilWrapperDefaultObjectLongBenchmark.testRandomGetAvgTime            avgt   15        179.065 ±      18.389  ns/op
+FastutilWrapperDefaultObjectLongBenchmark.testRandomPutAvgTime            avgt   15        831.579 ±     268.410  ns/op
+
+JavaUtilWrapperObjectLongBenchmark.testRandomAllOpsAvgTime                avgt   15        785.415 ±     153.079  ns/op
+JavaUtilWrapperObjectLongBenchmark.testRandomGetAvgTime                   avgt   15        251.149 ±      10.494  ns/op
+JavaUtilWrapperObjectLongBenchmark.testRandomPutAvgTime                   avgt   15       1211.072 ±     152.786  ns/op
+
+JavaConcurrentObjectLongBenchmark.testRandomAllOpsAvgTime                 avgt   15        418.897 ±      35.770  ns/op
+JavaConcurrentObjectLongBenchmark.testRandomGetAvgTime                    avgt   15         27.664 ±       0.125  ns/op
+JavaConcurrentObjectLongBenchmark.testRandomPutAvgTime                    avgt   15       7039.788 ±   10679.090  ns/op
+```
+
+#### Info
 
 The machine
 ```shell
-MacBook Pro (15-inch, 2019)
-Processor 2,6 GHz 6-Core Intel Core i7
-Memory 16 GB 2400 MHz DDR4
+OS Kubuntu 24.10
+Processor 3,4 GHz 16-Core AMD Ryzen 9 5950X
+Memory 64 GB 3600 MHz DDR4
 ```
 
 ## Maintainers

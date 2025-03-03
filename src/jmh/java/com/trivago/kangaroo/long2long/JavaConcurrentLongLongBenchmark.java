@@ -1,33 +1,27 @@
-package com.trivago.kangaroo;
+package com.trivago.kangaroo.long2long;
 
-import it.unimi.dsi.fastutil.longs.Long2LongOpenHashMap;
-import org.openjdk.jmh.annotations.Level;
-import org.openjdk.jmh.annotations.Measurement;
-import org.openjdk.jmh.annotations.Scope;
-import org.openjdk.jmh.annotations.Setup;
-import org.openjdk.jmh.annotations.State;
-import org.openjdk.jmh.annotations.Warmup;
+import com.trivago.kangaroo.AbstractCommonBenchHelper;
+import org.openjdk.jmh.annotations.*;
 
-import java.util.Collections;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
 @State(Scope.Benchmark)
 @Warmup(iterations = 3, time = 1)
 @Measurement(iterations = 3, time = 2)
-public class JavaUtilWrapperBenchmark extends AbstractCommonBenchHelper {
+public class JavaConcurrentLongLongBenchmark extends AbstractCommonBenchHelper {
 
     Map<Long, Long> map;
 
     @Setup(Level.Trial)
     public void loadData() {
-        Long2LongOpenHashMap m = new Long2LongOpenHashMap(AbstractBenchHelper.NUM_VALUES, 0.8f);
-        for (int i = 0; i < AbstractBenchHelper.NUM_VALUES; i++) {
+        map = new ConcurrentHashMap<>(AbstractLongLongBenchHelper.NUM_VALUES, 0.8f);
+        for (int i = 0; i < AbstractLongLongBenchHelper.NUM_VALUES; i++) {
             long key = ThreadLocalRandom.current().nextLong();
             long value = ThreadLocalRandom.current().nextLong();
-            m.put(key, value);
+            map.put(key, value);
         }
-        map = Collections.synchronizedMap(m);
     }
 
     public void testGet() {
