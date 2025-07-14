@@ -32,14 +32,14 @@ _Note_: currently the lib contains wrappers not for every primitive map. Feel fr
 <dependency>
     <groupId>com.trivago</groupId>
     <artifactId>fastutil-concurrent-wrapper</artifactId>
-    <version>0.2.2</version>
+    <version>0.2.3</version>
 </dependency>
 ```
 
 #### Gradle
 
 ```groovy
-implementation group: 'com.trivago', name: 'fastutil-concurrent-wrapper', version: '0.2.2'
+implementation group: 'com.trivago', name: 'fastutil-concurrent-wrapper', version: '0.2.3'
 ```
 
 ## Usage
@@ -135,3 +135,4 @@ A-Z surname order
 - [@mchernyakov](https://github.com/mchernyakov)
 - [@erdoganf](https://github.com/erdoganf)
 - [@sarveswaran-m](https://github.com/sarveswaran-m)
+- [@p0nkr4t](https://github.com/p0nkr4t)
