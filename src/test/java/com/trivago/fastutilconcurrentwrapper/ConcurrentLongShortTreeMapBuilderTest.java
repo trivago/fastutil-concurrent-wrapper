@@ -13,7 +13,6 @@ public class ConcurrentLongShortTreeMapBuilderTest {
     @Test
     public void buildsBusyWaitingMap() {
         ConcurrentLongShortTreeMapBuilder b = ConcurrentLongShortTreeMapBuilder.newBuilder()
-                .withBuckets(2)
                 .withDefaultValue(DEFAULT_VALUE)
                 .withMode(ConcurrentLongShortTreeMapBuilder.MapMode.BUSY_WAITING);
         LongShortTreeMap map = b.build();
@@ -27,7 +26,6 @@ public class ConcurrentLongShortTreeMapBuilderTest {
     @Test
     public void buildsBlockingMap() {
         ConcurrentLongShortTreeMapBuilder b = ConcurrentLongShortTreeMapBuilder.newBuilder()
-                .withBuckets(2)
                 .withDefaultValue(DEFAULT_VALUE)
                 .withMode(ConcurrentLongShortTreeMapBuilder.MapMode.BLOCKING);
         LongShortTreeMap map = b.build();

@@ -5,7 +5,10 @@ import com.trivago.fastutilconcurrentwrapper.map.ConcurrentLongShortTreeMap;
 
 public final class ConcurrentLongShortTreeMapBuilder {
     private MapMode mapMode = MapMode.BLOCKING;
-    private int buckets = 8;
+    // floorEntry() requires all keys to reside in a single bucket to return
+    // correct results, so the bucket count is fixed at 1.
+    // ToDo: Identify a bucketing methodology that works for TreeMap
+    private static final int BUCKETS = 1;
     private short defaultValue = LongShortMap.DEFAULT_VALUE;
 
     private ConcurrentLongShortTreeMapBuilder() {
@@ -15,10 +18,6 @@ public final class ConcurrentLongShortTreeMapBuilder {
         return new ConcurrentLongShortTreeMapBuilder();
     }
 
-    public ConcurrentLongShortTreeMapBuilder withBuckets(int buckets) {
-        this.buckets = buckets;
-        return this;
-    }
 
     public ConcurrentLongShortTreeMapBuilder withMode(MapMode mapMode) {
         this.mapMode = mapMode;
@@ -39,7 +38,7 @@ public final class ConcurrentLongShortTreeMapBuilder {
             @Override
             LongShortTreeMap createMap(ConcurrentLongShortTreeMapBuilder builder) {
                 return new ConcurrentBusyWaitingLongShortTreeMap(
-                        builder.buckets,
+                        BUCKETS,
                         builder.defaultValue);
             }
         },
@@ -47,7 +46,7 @@ public final class ConcurrentLongShortTreeMapBuilder {
             @Override
             LongShortTreeMap createMap(ConcurrentLongShortTreeMapBuilder builder) {
                 return new ConcurrentLongShortTreeMap(
-                        builder.buckets,
+                        BUCKETS,
                         builder.defaultValue);
             }
         };
