@@ -17,6 +17,10 @@ public abstract class AbstractMapTest {
         return ThreadLocalRandom.current().nextInt();
     }
 
+    protected static short nextShort() {
+        return (short) ThreadLocalRandom.current().nextInt(Short.MIN_VALUE, Short.MAX_VALUE + 1);
+    }
+
     @Test
     protected abstract void containsKeyReturnsFalseIfMapIsEmpty();
 
