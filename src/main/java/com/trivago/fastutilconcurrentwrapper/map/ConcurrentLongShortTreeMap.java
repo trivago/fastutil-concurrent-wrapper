@@ -1,13 +1,17 @@
 package com.trivago.fastutilconcurrentwrapper.map;
+
 import com.trivago.fastutilconcurrentwrapper.LongShortTreeMap;
 import com.trivago.fastutilconcurrentwrapper.wrapper.PrimitiveFastutilLongShortTreeWrapper;
 import it.unimi.dsi.fastutil.longs.Long2ShortFunction;
 import it.unimi.dsi.fastutil.longs.Long2ShortMap;
+
 import java.util.concurrent.locks.Lock;
 import java.util.function.BiFunction;
+
 public class ConcurrentLongShortTreeMap extends PrimitiveConcurrentMap implements LongShortTreeMap {
     private final LongShortTreeMap[] maps;
     private final short defaultValue;
+
     public ConcurrentLongShortTreeMap(int numBuckets, short defaultValue) {
         super(numBuckets);
         this.maps = new LongShortTreeMap[numBuckets];
@@ -16,14 +20,17 @@ public class ConcurrentLongShortTreeMap extends PrimitiveConcurrentMap implement
             maps[i] = new PrimitiveFastutilLongShortTreeWrapper(defaultValue);
         }
     }
+
     @Override
     public int size() {
         return super.size(maps);
     }
+
     @Override
     public boolean isEmpty() {
         return super.isEmpty(maps);
     }
+
     @Override
     public boolean containsKey(long key) {
         int bucket = getBucket(key);
@@ -35,6 +42,7 @@ public class ConcurrentLongShortTreeMap extends PrimitiveConcurrentMap implement
             readLock.unlock();
         }
     }
+
     @Override
     public Long2ShortMap.Entry floorEntry(long key) {
         int bucket = getBucket(key);
@@ -46,6 +54,7 @@ public class ConcurrentLongShortTreeMap extends PrimitiveConcurrentMap implement
             readLock.unlock();
         }
     }
+
     @Override
     public short get(long l) {
         int bucket = getBucket(l);
@@ -59,6 +68,7 @@ public class ConcurrentLongShortTreeMap extends PrimitiveConcurrentMap implement
         }
         return result;
     }
+
     @Override
     public short put(long key, short value) {
         int bucket = getBucket(key);
@@ -72,10 +82,12 @@ public class ConcurrentLongShortTreeMap extends PrimitiveConcurrentMap implement
         }
         return result;
     }
+
     @Override
     public short getDefaultValue() {
         return defaultValue;
     }
+
     @Override
     public short remove(long key) {
         int bucket = getBucket(key);
@@ -87,6 +99,7 @@ public class ConcurrentLongShortTreeMap extends PrimitiveConcurrentMap implement
             writeLock.unlock();
         }
     }
+
     @Override
     public boolean remove(long key, short value) {
         int bucket = getBucket(key);
@@ -98,6 +111,7 @@ public class ConcurrentLongShortTreeMap extends PrimitiveConcurrentMap implement
             writeLock.unlock();
         }
     }
+
     @Override
     public short computeIfAbsent(long key, Long2ShortFunction mappingFunction) {
         int bucket = getBucket(key);
@@ -109,6 +123,7 @@ public class ConcurrentLongShortTreeMap extends PrimitiveConcurrentMap implement
             writeLock.unlock();
         }
     }
+
     @Override
     public short computeIfPresent(long key, BiFunction<Long, Short, Short> mappingFunction) {
         int bucket = getBucket(key);

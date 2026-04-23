@@ -1,29 +1,36 @@
 package com.trivago.fastutilconcurrentwrapper.longshort;
+
 import com.trivago.fastutilconcurrentwrapper.AbstractMapTest;
 import com.trivago.fastutilconcurrentwrapper.LongShortTreeMap;
 import it.unimi.dsi.fastutil.longs.Long2ShortMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 abstract class AbstractLongShortTreeMapTest extends AbstractMapTest {
     private static final short FASTUTIL_DEFAULT_VALUE = 0;
     protected short defaultValue;
     private LongShortTreeMap map;
+
     abstract LongShortTreeMap createMap();
+
     @BeforeEach
     void initializeMap() {
         defaultValue = nextShort();
         map = createMap();
     }
+
     @Test
     protected void containsKeyReturnsFalseIfMapIsEmpty() {
         final long key = nextLong();
         assertFalse(map.containsKey(key));
     }
+
     @Test
     protected void containsKeyReturnsTrueIfKeyExists() {
         long key = nextLong();
@@ -31,6 +38,7 @@ abstract class AbstractLongShortTreeMapTest extends AbstractMapTest {
         map.put(key, value);
         assertTrue(map.containsKey(key));
     }
+
     @Test
     protected void containsKeyReturnsFalseIfKeyWasRemoved() {
         long key = nextLong();
@@ -39,10 +47,12 @@ abstract class AbstractLongShortTreeMapTest extends AbstractMapTest {
         map.remove(key);
         assertFalse(map.containsKey(key));
     }
+
     @Test
     protected void mapIsEmptyWhenNothingWasInserted() {
         assertTrue(map.isEmpty());
     }
+
     @Test
     protected void mapIsEmptyWhenAllKeysAreDeleted() {
         int entryCount = (Math.abs(nextInt()) % 100) + 1;
@@ -55,6 +65,7 @@ abstract class AbstractLongShortTreeMapTest extends AbstractMapTest {
         }
         assertTrue(map.isEmpty());
     }
+
     @Test
     protected void sizeIsCorrect() {
         int entries = (Math.abs(nextInt()) % 50) + 1;
@@ -64,6 +75,7 @@ abstract class AbstractLongShortTreeMapTest extends AbstractMapTest {
         }
         assertEquals(entries, map.size());
     }
+
     @Test
     protected void gettingExistingValueReturnsCorrectValue() {
         long key = nextLong();
@@ -71,16 +83,19 @@ abstract class AbstractLongShortTreeMapTest extends AbstractMapTest {
         map.put(key, value);
         assertEquals(value, map.get(key));
     }
+
     @Test
     protected void gettingNonExistingValueReturnsCorrectValue() {
         long key = nextLong();
         assertEquals(defaultValue, map.get(key));
     }
+
     @Test
     protected void removingNonExistingKeyReturnsDefaultValue() {
         long key = nextLong();
         assertEquals(defaultValue, map.remove(key));
     }
+
     @Test
     protected void removingExistingKeyReturnsPreviousValue() {
         long key = nextLong();
@@ -88,12 +103,14 @@ abstract class AbstractLongShortTreeMapTest extends AbstractMapTest {
         map.put(key, value);
         assertEquals(value, map.remove(key));
     }
+
     @Test
     protected void removingWithValueWhenKeyDoesNotExistReturnsFalse() {
         long key = nextLong();
         short value = nextShort();
         assertFalse(map.remove(key, value));
     }
+
     @Test
     protected void removingWithValueWhenValueIsDifferentReturnsFalse() {
         long key = nextLong();
@@ -101,6 +118,7 @@ abstract class AbstractLongShortTreeMapTest extends AbstractMapTest {
         map.put(key, value);
         assertFalse(map.remove(key, (short) (value - 1)));
     }
+
     @Test
     protected void removingWithValueWhenValueIsSameReturnsTrue() {
         long key = nextLong();
@@ -108,6 +126,7 @@ abstract class AbstractLongShortTreeMapTest extends AbstractMapTest {
         map.put(key, value);
         assertTrue(map.remove(key, value));
     }
+
     @Test
     protected void puttingValueIfAbsentReturnsSameValue() {
         long key = nextLong();
@@ -115,6 +134,7 @@ abstract class AbstractLongShortTreeMapTest extends AbstractMapTest {
         map.computeIfAbsent(key, l -> value);
         assertEquals(value, map.get(key));
     }
+
     @Test
     protected void checkingValueIfNotAbsentReturnsSameValue() {
         long key = nextLong();
@@ -124,6 +144,7 @@ abstract class AbstractLongShortTreeMapTest extends AbstractMapTest {
         assertEquals(value, map.get(key));
         assertEquals(value, returned);
     }
+
     @Test
     protected void replacingValueIfPresentReturnsNewValue() {
         long key = nextLong();
@@ -132,17 +153,20 @@ abstract class AbstractLongShortTreeMapTest extends AbstractMapTest {
         map.computeIfPresent(key, (aLongKey, aShortValue) -> (short) (2 * aShortValue));
         assertEquals((short) (2 * value), map.get(key));
     }
+
     @Test
     protected void checkingValueIfNotPresentReturnsDefaultValue() {
         long key = nextLong();
         map.computeIfPresent(key, (aLongKey, aShortValue) -> (short) (2 * aShortValue));
         assertEquals(map.getDefaultValue(), map.get(key));
     }
+
     // --- floorEntry tests ---
     @Test
     protected void floorEntryEmptyMapReturnsNull() {
         assertNull(map.floorEntry(100L));
     }
+
     @Test
     protected void floorEntryExactMatchReturnsExactEntry() {
         map.put(10L, (short) 1);
@@ -153,6 +177,7 @@ abstract class AbstractLongShortTreeMapTest extends AbstractMapTest {
         assertEquals(20L, result.getLongKey());
         assertEquals((short) 2, result.getShortValue());
     }
+
     @Test
     protected void floorEntryKeyBetweenEntriesReturnsPredecessor() {
         map.put(10L, (short) 1);
@@ -163,12 +188,14 @@ abstract class AbstractLongShortTreeMapTest extends AbstractMapTest {
         assertEquals(20L, result.getLongKey());
         assertEquals((short) 2, result.getShortValue());
     }
+
     @Test
     protected void floorEntryKeyBelowMinimumReturnsNull() {
         map.put(10L, (short) 1);
         map.put(20L, (short) 2);
         assertNull(map.floorEntry(5L));
     }
+
     @Test
     protected void floorEntryKeyAboveMaximumReturnsLastEntry() {
         map.put(10L, (short) 1);
