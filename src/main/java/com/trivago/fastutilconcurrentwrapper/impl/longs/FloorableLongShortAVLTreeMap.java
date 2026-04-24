@@ -20,9 +20,8 @@ import it.unimi.dsi.fastutil.longs.Long2ShortSortedMap;
  * overhead is O(1). The additional method-call frame adds negligible latency
  * (~1 ns) compared to the O(log n) tree traversal (~100–500 ns at 10M entries).
  *
- * <p>This class is placed in the {@code it.unimi.dsi.fastutil.longs} package
- * to allow future access to package-private tree internals if a more optimized
- * implementation becomes necessary.
+ * <p>This wrapper lives in this project's implementation package and provides
+ * floor-entry behavior without relying on fastutil package-private internals.
  *
  * @see Long2ShortAVLTreeMap
  * @see Long2ShortSortedMap#headMap(long)
