@@ -1,5 +1,7 @@
 package com.trivago.fastutilconcurrentwrapper;
+
 import it.unimi.dsi.fastutil.longs.Long2ShortMap;
+
 /**
  * A sorted {@link LongShortMap} that additionally supports a {@code floorEntry()} operation.
  */
