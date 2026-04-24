@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 abstract class AbstractLongShortTreeMapTest extends AbstractMapTest {
-    private static final short FASTUTIL_DEFAULT_VALUE = 0;
     protected short defaultValue;
     private LongShortTreeMap map;
 
