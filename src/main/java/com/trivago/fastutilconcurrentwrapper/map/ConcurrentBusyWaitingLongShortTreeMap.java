@@ -13,7 +13,11 @@ public class ConcurrentBusyWaitingLongShortTreeMap extends PrimitiveConcurrentMa
     private final LongShortTreeMap[] maps;
     private final short defaultValue;
 
-    public ConcurrentBusyWaitingLongShortTreeMap(int numBuckets,
+    public ConcurrentBusyWaitingLongShortTreeMap(short defaultValue) {
+        this(LongShortTreeMap.BUCKETS,defaultValue);
+    }
+
+    private ConcurrentBusyWaitingLongShortTreeMap(int numBuckets,
                                              short defaultValue) {
         super(numBuckets);
 

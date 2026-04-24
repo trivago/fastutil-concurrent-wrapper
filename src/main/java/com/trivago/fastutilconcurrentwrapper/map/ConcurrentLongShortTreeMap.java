@@ -12,7 +12,11 @@ public class ConcurrentLongShortTreeMap extends PrimitiveConcurrentMap implement
     private final LongShortTreeMap[] maps;
     private final short defaultValue;
 
-    public ConcurrentLongShortTreeMap(int numBuckets, short defaultValue) {
+    public ConcurrentLongShortTreeMap(short defaultValue) {
+        this(LongShortTreeMap.BUCKETS,defaultValue);
+    }
+
+    private ConcurrentLongShortTreeMap(int numBuckets, short defaultValue) {
         super(numBuckets);
         this.maps = new LongShortTreeMap[numBuckets];
         this.defaultValue = defaultValue;

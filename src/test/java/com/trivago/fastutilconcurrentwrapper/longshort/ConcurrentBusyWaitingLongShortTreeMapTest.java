@@ -6,6 +6,6 @@ import com.trivago.fastutilconcurrentwrapper.map.ConcurrentBusyWaitingLongShortT
 public class ConcurrentBusyWaitingLongShortTreeMapTest extends AbstractLongShortTreeMapTest {
     @Override
     LongShortTreeMap createMap() {
-        return new ConcurrentBusyWaitingLongShortTreeMap(1, defaultValue);
+        return new ConcurrentBusyWaitingLongShortTreeMap(defaultValue);
     }
 }

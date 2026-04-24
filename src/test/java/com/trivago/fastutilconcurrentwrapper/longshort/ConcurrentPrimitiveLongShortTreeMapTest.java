@@ -6,6 +6,6 @@ import com.trivago.fastutilconcurrentwrapper.map.ConcurrentLongShortTreeMap;
 public class ConcurrentPrimitiveLongShortTreeMapTest extends AbstractLongShortTreeMapTest {
     @Override
     LongShortTreeMap createMap() {
-        return new ConcurrentLongShortTreeMap(1, defaultValue);
+        return new ConcurrentLongShortTreeMap(defaultValue);
     }
 }
