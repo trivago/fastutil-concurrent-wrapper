@@ -16,14 +16,14 @@ import static org.junit.jupiter.api.Assertions.assertNull;
  *   <li>{@link FloorableLongShortAVLTreeMap} — headMap()-based</li>
  * </ul>
  *
- * <p>Uses a given-when-then structure. Both implementations are tested with
- * identical inputs via {@link FloorEntryContract} to ensure behavioural equivalence.
+ * <p>Uses a given-when-then structure and exercises the implementation via
+ * {@link FloorEntryContract}.
  */
 class FloorEntryCorrectnessTest {
 
     /**
-     * Shared contract tests that both implementations must satisfy.
-     * Each nested class instantiates its own map type and delegates here.
+     * Shared contract tests for the {@code floorEntry()} behaviour exercised by
+     * the nested test class.
      */
     interface FloorEntryContract {
 
