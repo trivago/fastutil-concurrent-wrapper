@@ -1,8 +1,11 @@
 package com.trivago.fastutilconcurrentwrapper.wrapper;
+
 import com.trivago.fastutilconcurrentwrapper.LongShortTreeMap;
 import com.trivago.fastutilconcurrentwrapper.impl.longs.FloorableLongShortAVLTreeMap;
+
 import it.unimi.dsi.fastutil.longs.Long2ShortFunction;
 import it.unimi.dsi.fastutil.longs.Long2ShortMap;
+
 import java.util.function.BiFunction;
 public class PrimitiveFastutilLongShortTreeWrapper implements LongShortTreeMap {
     private final FloorableLongShortAVLTreeMap map;
