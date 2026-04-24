@@ -1,14 +1,21 @@
 plugins {
     id "idea"
     id "java-library"
+    id "signing"
     id "me.champeau.jmh" version "0.6.6"
     id "com.vanniktech.maven.publish" version "0.34.0"
+}
+
+signing {
+    useGpgCmd()
+    sign publishing.publications
 }
 
 allprojects {
     repositories {
         mavenLocal()
         mavenCentral()
+        gradlePluginPortal()
         maven {
             url "https://plugins.gradle.org/m2/"
         }
@@ -19,6 +26,7 @@ group 'com.trivago'
 version '0.2.4-SNAPSHOT'
 
 mavenPublishing {
+    coordinates("com.trivago", "fastutil-concurrent-wrapper", "0.2.3")
     pom {
         name = "fastutil-concurrent-wrapper"
         description = "Set of concurrent wrappers around fastutil primitive maps."
